@@ -1,7 +1,7 @@
 {% extends "couponBank/base.html" %}
 
 {% block content %}
-<form  method="POST">
+<form  enctype="multipart/form-data" method="POST">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" name="" value="Create Offer">

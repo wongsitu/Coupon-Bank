@@ -18,9 +18,9 @@ class UserProfile(models.Model):
 
 # An individual product
 class Product (models.Model):
-    brand = models.CharField(max_length=200)
-    description = models.TextField(max_length=1000)
-    picture = models.ImageField(upload_to="picture",blank=True)
+    brand = models.CharField(max_length=200,blank=True)
+    description = models.TextField(max_length=1000,blank=True)
+    picture = models.ImageField(upload_to='picture/',blank=True)
     posted_at = models.DateTimeField()
     price = models.PositiveIntegerField(blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='products') #Many products to a user

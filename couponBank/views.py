@@ -103,15 +103,14 @@ def create_product(request):
         if form.is_valid():
             product = form.save(commit=False)
             try:
-                picture = request.POST['picture']
-                product.brand = detect_logos(picture)
-                product.description = detect_text(picture)
+                picture = request.FILES['picture']
+                product.brand = detect_logos(str(picture))
+                product.description = detect_text(str(picture))
                 product.posted_at = timezone.datetime.now()
                 product.user = request.user
-            except:
-                return redirect('profile')
+            except KeyError:
+                return HttpResponse("Not valid")
             product.save()
-            return redirect('profile')
         else:
             print('\nform is invalid\n')
     else:
