@@ -44,7 +44,11 @@ def FAQ(request):
 def shoppingCart(request):
     user = User.objects.get(id=request.user.id)
     cart_orders = Order.objects.filter(buyer=user)
-    return render(request, 'couponBank/shoppingCart.html',{'cart_orders': cart_orders })
+    Total_price = []
+    for obj in cart_orders.filter():
+        Total_price.append(obj.products.get().price)
+    Total_price = sum(Total_price)
+    return render(request, 'couponBank/shoppingCart.html',{'cart_orders': cart_orders, "Total_price":Total_price })
 
 def detect_logos(path):
     """Detects logos in the file."""
@@ -154,11 +158,12 @@ def generate_order_id():
 def add_to_cart(request,pk):
     user = User.objects.get(id=request.user.id)
     product = Product.objects.get(id=pk)
-    order, status = Order.objects.get_or_create(buyer=user,is_ordered=False,date_ordered=timezone.datetime.now())
+    order, status = Order.objects.get_or_create(buyer=user,is_ordered=False, date_ordered = timezone.datetime.now())
     order.products.add(Product.objects.get(id=pk))
     if status:
         order.ref_code = generate_order_id()
         order.save()
+    print("Hello")
     print(order.get_cart_items())
     print("Item added to cart")
     return redirect('homepage')
@@ -166,10 +171,10 @@ def add_to_cart(request,pk):
 @login_required
 def delete_from_cart(request,pk):
     item_to_delete = Order.objects.get(id=pk)
-    if item_to_delete.exist():
+    if item_to_delete != None:
         item_to_delete.delete()
         print("Item has been deleted")
-    return redirect('profile')
+    return redirect('shoppingCart')
 
 @login_required
 def order_details(request,id):

@@ -1,10 +1,30 @@
 {% extends "couponBank/base.html" %}
 
 {% block content %}
-    <h1>This is shoppingcart page</h1>
-    {% for orders in cart_orders %}
-    </p>{{orders.products}} <a  href="#" class="btn btn-danger">Remove</a></p>
-    {% endfor %}
+    <h1>Shopping Cart</h1>
+    <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Order id</th>
+                    <th scope="col">Picture</th>
+                    <th scope="col">Brand</th>
+                    <th scope="col">price</th>
+                    <th scope="col">posted at</th>
+                    <th scope="col">Options</th>
+                </tr>
+            </thead>
+            {% for order in cart_orders %}
+                <tbody>
+                    <tr>
+                        <th>{{order.products.get.id}}</th>
+                        <td><img img id="thumb" src="{{order.products.get.picture.url}}"></td>
+                        <td>{{order.products.get}}</td>
+                        <td>{{order.products.get.price}}</td>
+                        <td>{{order.products.get.posted_at}}</td>
+                        <td><a  href="{% url 'delete_from_cart' pk=order %}" class="btn btn-danger">Remove</a></td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+    </table>
+    <p>Total: {{Total_price}}</p>
 {% endblock %}
-
-<!-- {% url 'delete_from_cart' pk=orders.products.id %} -->

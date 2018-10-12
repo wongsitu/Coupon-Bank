@@ -34,15 +34,16 @@ class Order (models.Model):
     buyer = models.ForeignKey(User,on_delete=models.SET_NULL, null=True) #Many orders to a user
     is_ordered = models.BooleanField(default=False)
     products = models.ManyToManyField(Product,related_name='products') #Many products to an order
-    date_ordered = models.DateTimeField()
+    date_ordered = models.DateTimeField(blank=True)
 
     def get_cart_items(self):
         return self.products.all()
 
     def cart_total(self):
-        return sum([product.product.price for product in self.products.all()])
+        return sum([product.price for product in self.products.all()])
 
     def __str__(self):
-        return self.products
+        prods = self.id
+        return str(prods)
 
 
