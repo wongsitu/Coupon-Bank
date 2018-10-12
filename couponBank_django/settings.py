@@ -22,11 +22,13 @@ MEDIA_DIR = os.path.join(BASE_DIR,'couponBank/media')
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '49%ki5gfi=7_9s!nzz6%j9k3q8f@wd=&t*n_6j@c_7%*2#bg2*'
+SECRET_KEY = os.environ['SECRET_KEY']
+STRIPE_LIVE_SECRET_KEY = os.environ['STRIPE_LIVE_SECRET_KEY']
+
 STRIPE_LIVE_PUBLIC_KEY = os.environ.get("STRIPE_LIVE_PUBLIC_KEY", "pk_test_FYAdQzMIDlnuwxjpfdDoDZfq")
-STRIPE_LIVE_SECRET_KEY = os.environ.get("STRIPE_LIVE_SECRET_KEY", "sk_test_7QsvUidiOUvuu5m2RS4zGajH")
+STRIPE_LIVE_SECRET_KEY = os.environ.get("STRIPE_LIVE_SECRET_KEY", STRIPE_LIVE_SECRET_KEY)
 STRIPE_TEST_PUBLIC_KEY = os.environ.get("STRIPE_TEST_PUBLIC_KEY", "pk_test_FYAdQzMIDlnuwxjpfdDoDZfq")
-STRIPE_TEST_SECRET_KEY = os.environ.get("STRIPE_TEST_SECRET_KEY", "sk_test_7QsvUidiOUvuu5m2RS4zGajH")
+STRIPE_TEST_SECRET_KEY = os.environ.get("STRIPE_TEST_SECRET_KEY", STRIPE_LIVE_SECRET_KEY)
 STRIPE_LIVE_MODE = False  # Change to True in production
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
