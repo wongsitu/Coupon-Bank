@@ -2,6 +2,7 @@
 
 {% block content %}
     <h1>My profile page<h1>
+            <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
     <hr>
     <h2>Recent Pursaches</h2>
     <hr>
@@ -23,7 +24,7 @@
                     <th scope="row">{{offer.id}}</th>
                     <td><img id="thumb" src="{{offer.picture.url}}"></td>
                     <td>{{offer.brand}}</td>
-                    <td>${{offer.price}}</td>
+                    <td>$ {{offer.price}}</td>
                     <td>{{offer.posted_at}}</td>
                     <td>
                         <a href="{% url 'delete_product' pk=offer.id %}" class="btn btn-danger">Remove <i class="fas fa-trash-alt"></i></a>

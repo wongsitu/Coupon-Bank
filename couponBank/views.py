@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from couponBank.forms import UserForm, UserProfileForm, ProductForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.urls import reverse
@@ -28,6 +29,9 @@ def profile(request):
     user = User.objects.get(id=request.user.id)
     user_offers = Product.objects.filter(user=user)
     return render(request, 'couponBank/profile.html',{'user_offers': user_offers })
+
+def edit_profile(request):
+    return render(request, 'couponBank/edit_profile.html')
 
 def search(request):
     query = request.GET.get('q')
@@ -194,7 +198,6 @@ def checkout(request):
 
 @login_required
 def payment(request):
-    context = { "stripe_key": settings.STRIPE_PUBLIC_KEY }
-    return render(request, "couponBank/payment.html", context)
-
-
+    user = User.objects.get(id=request.user.id)
+    orders = Order.objects.filter(buyer=user)
+    return render(request, "couponBank/payment.html", { "stripe_key": settings.STRIPE_TEST_PUBLIC_KEY, "orders":orders })
