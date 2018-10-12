@@ -2,7 +2,36 @@
 
 {% block content %}
     <h1>My profile page<h1>
+    <hr>
     <h2>Recent Pursaches</h2>
+    <hr>
     <h2>Recent Offers</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Picture</th>
+                <th scope="col">Brand</th>
+                <th scope="col">price</th>
+                <th scope="col">posted at</th>
+                <th scope="col">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for offer in user_offers%}
+                <tr>
+                    <th scope="row">{{offer.id}}</th>
+                    <td><img id="thumb" src="{{offer.picture.url}}"></td>
+                    <td>{{offer.brand}}</td>
+                    <td>${{offer.price}}</td>
+                    <td>{{offer.posted_at}}</td>
+                    <td>
+                        <a href="{% url 'delete_product' pk=offer.id %}" class="btn btn-danger">Remove <i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            {% endfor%}
+        </tbody>
+    </table>
+    <hr>
     <h2>Pending Transactions</h2>
 {% endblock %}

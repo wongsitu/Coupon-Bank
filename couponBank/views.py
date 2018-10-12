@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.urls import reverse
 from django.utils import timezone
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, QueryDict
 from .models import User, UserProfile, Product, Order
 from django.views.decorators.csrf import csrf_exempt
@@ -28,6 +29,11 @@ def profile(request):
     user_offers = Product.objects.filter(user=user)
     return render(request, 'couponBank/profile.html',{'user_offers': user_offers })
 
+def search(request):
+    query = request.GET.get('q')
+    searched_products = Product.objects.filter(Q(brand__icontains=query)|Q(description__icontains=query))
+    return render(request, 'couponBank/searchpage.html',{'searched_products': searched_products })
+
 def about(request):
     return render(request, 'couponBank/about.html')
 
@@ -36,7 +42,9 @@ def FAQ(request):
 
 @login_required
 def shoppingCart(request):
-    return render(request, 'couponBank/shoppingCart.html')
+    user = User.objects.get(id=request.user.id)
+    cart_orders = Order.objects.filter(buyer=user)
+    return render(request, 'couponBank/shoppingCart.html',{'cart_orders': cart_orders })
 
 def detect_logos(path):
     """Detects logos in the file."""
@@ -97,6 +105,15 @@ def user_logout(request):
     logout(request)
     return redirect('homepage')
 
+def get_user_pending_order(request):
+    user = User.objects.get(id=request.user.id)
+    order = Order.objects.filter(user=user, is_ordered=False)
+    print(order)
+    if order:
+        print("Aloha")
+        return order[0]
+    return None
+
 @login_required
 def create_product(request):
     user = User.objects.get(id=request.user.id)
@@ -119,21 +136,60 @@ def create_product(request):
         form = ProductForm()
     return render(request,'couponBank/createProduct.html', {'form': form },{'user': user})
 
+@login_required
+def delete_product(request,pk):
+    product_to_delete = Product.objects.get(id=pk)
+    product_to_delete.delete()
+    return redirect('profile')
+
 def product_detail(request,pk):
     product = Product.objects.get(id=pk)
     return render(request,'couponBank/product_detail.html', {'product': product})
 
-# @login_required
-# def add_to_cart(request,pk):
-#     product = get_object_or_404(Product, id=pk)
-#     cart,created = Order.objects.get_or_create(user=request.user, active=True)
-#     cart.add_to_cart(book_id)
-#     return redirect('cart')
+def generate_order_id():
+    date_str = str(timezone.datetime.now())
+    return date_str
 
+@login_required
+def add_to_cart(request,pk):
+    user = User.objects.get(id=request.user.id)
+    product = Product.objects.get(id=pk)
+    order, status = Order.objects.get_or_create(buyer=user,is_ordered=False,date_ordered=timezone.datetime.now())
+    order.products.add(Product.objects.get(id=pk))
+    if status:
+        order.ref_code = generate_order_id()
+        order.save()
+    print(order.get_cart_items())
+    print("Item added to cart")
+    return redirect('homepage')
+
+@login_required
+def delete_from_cart(request,pk):
+    item_to_delete = Order.objects.get(id=pk)
+    if item_to_delete.exist():
+        item_to_delete.delete()
+        print("Item has been deleted")
+    return redirect('profile')
+
+@login_required
+def order_details(request,id):
+    existing_order = get_user_pending_order(request)
+    context = {
+        'order': existing_order
+    }
+    return render(request,"couponBank/summary.html",context)
+
+@login_required
+def checkout(request):
+    existing_order = get_user_pending_order(request)
+    context ={
+        'order': existing_order
+    }
+    return render(request, 'couponBank/checkout.html',context)
 
 @login_required
 def payment(request):
     context = { "stripe_key": settings.STRIPE_PUBLIC_KEY }
-    return render(request, "payment.html", context)
+    return render(request, "couponBank/payment.html", context)
 
 

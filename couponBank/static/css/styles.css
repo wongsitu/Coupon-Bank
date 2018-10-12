@@ -21,13 +21,27 @@ main{
     break-inside: avoid-column;
 }
 
+.form{
+    margin: 12.5em;
+}
+
 #thumbnail{
     width: 100%;
     margin: auto 0;
 }
 
 .single-view{
+    margin: 2em;
     display:grid;
     grid-template-rows: 1fr;
     grid-template-columns: 1fr 2fr;
+}
+
+.description{
+    margin: 1em;
+}
+
+#thumb{
+    width:100px;
+    text-align: center;
 }

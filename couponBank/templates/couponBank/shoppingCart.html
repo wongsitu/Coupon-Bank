@@ -2,4 +2,9 @@
 
 {% block content %}
     <h1>This is shoppingcart page</h1>
+    {% for orders in cart_orders %}
+    </p>{{orders.products}} <a  href="#" class="btn btn-danger">Remove</a></p>
+    {% endfor %}
 {% endblock %}
+
+<!-- {% url 'delete_from_cart' pk=orders.products.id %} -->

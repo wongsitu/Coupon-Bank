@@ -31,9 +31,9 @@ class Product (models.Model):
 # An individual order
 class Order (models.Model): 
     ref_code = models.CharField(max_length=100)
-    buyer = models.OneToOneField(User,on_delete=models.SET_NULL, null=True) #Many orders to a user
+    buyer = models.ForeignKey(User,on_delete=models.SET_NULL, null=True) #Many orders to a user
     is_ordered = models.BooleanField(default=False)
-    products = models.ManyToManyField(Product) #Many products to an order
+    products = models.ManyToManyField(Product,related_name='products') #Many products to an order
     date_ordered = models.DateTimeField()
 
     def get_cart_items(self):
