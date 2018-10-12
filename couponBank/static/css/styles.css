@@ -27,7 +27,6 @@ main{
 
 #thumbnail{
     width: 100%;
-    margin: auto 0;
 }
 
 .single-view{
@@ -35,6 +34,8 @@ main{
     display:grid;
     grid-template-rows: 1fr;
     grid-template-columns: 1fr 2fr;
+    justify-items: center;
+    align-items: center;
 }
 
 .description{

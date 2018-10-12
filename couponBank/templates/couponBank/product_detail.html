@@ -7,7 +7,9 @@
     </div>
     <div class="description">
         <h1>{{product.brand}} Coupon</h1>
+        <p>Posted by: {{product.user}} at {{product.posted_at}}</p>
         <p>{{product.description}}</p>
+        <p>Price: ${{product.price}}</p>
         <a href="{% url 'add_to_cart' pk=product.id %}" class="btn btn-primary">Add to Shopping Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
     </div>
 <div>
