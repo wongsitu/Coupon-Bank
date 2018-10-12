@@ -1,0 +1,14 @@
+{% extends 'couponBank/base.html' %}
+
+{% block content %}
+<div class="single-view">
+    <div>
+        <img id="thumbnail" src="{{product.picture.url}}">
+    </div>
+    <div>
+        <h1>{{product.brand}} Coupon</h1>
+        <p>{{product.description}}</p>
+        <button type="button" class="btn btn-primary">Add to Shopping Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+    </div>
+<div>
+{% endblock %}

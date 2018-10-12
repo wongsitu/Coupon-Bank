@@ -13,16 +13,20 @@ import os
 from google.oauth2 import service_account
 from google.cloud import vision
 from google.cloud.vision import types
+from django.conf import settings
 
 credentials = service_account.Credentials. from_service_account_file('/Users/waikawongsitu/wdi/testing/.env/recognizion-a609ecd9ea34.json')
 client = vision.ImageAnnotatorClient(credentials=credentials)
 
 def homepage(request):
-    return render(request, 'couponBank/homepage.html')
+    products = Product.objects.all()
+    return render(request, 'couponBank/homepage.html',{'products': products })
 
 @login_required
 def profile(request):
-    return render(request, 'couponBank/profile.html')
+    user = User.objects.get(id=request.user.id)
+    user_offers = Product.objects.filter(user=user)
+    return render(request, 'couponBank/profile.html',{'user_offers': user_offers })
 
 def about(request):
     return render(request, 'couponBank/about.html')
@@ -41,7 +45,6 @@ def detect_logos(path):
     image = vision.types.Image(content=content)
     response = client.logo_detection(image=image)
     logos = response.logo_annotations
-    print('Logos:')
     return (logos[0].description)
 
 def detect_text(path):
@@ -51,7 +54,6 @@ def detect_text(path):
     image = vision.types.Image(content=content)
     response = client.text_detection(image=image)
     texts = response.text_annotations
-    print('Texts:')
     description = []
     for text in texts:
         description.append(text.description)
@@ -102,17 +104,36 @@ def create_product(request):
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
             product = form.save(commit=False)
-            try:
+            product.user = request.user
+            product.posted_at = timezone.datetime.now()
+            if 'picture' in request.FILES:
                 picture = request.FILES['picture']
-                product.brand = detect_logos(str(picture))
-                product.description = detect_text(str(picture))
-                product.posted_at = timezone.datetime.now()
-                product.user = request.user
-            except KeyError:
-                return HttpResponse("Not valid")
-            product.save()
+                product.save()
+                path = "/Users/waikawongsitu/wdi/testing/couponBank/media/picture/"+str(picture)
+                product.brand = detect_logos(path)
+                product.description = detect_text(path)
+                product.save()
         else:
             print('\nform is invalid\n')
     else:
         form = ProductForm()
     return render(request,'couponBank/createProduct.html', {'form': form },{'user': user})
+
+def product_detail(request,pk):
+    product = Product.objects.get(id=pk)
+    return render(request,'couponBank/product_detail.html', {'product': product})
+
+# @login_required
+# def add_to_cart(request,pk):
+#     product = get_object_or_404(Product, id=pk)
+#     cart,created = Order.objects.get_or_create(user=request.user, active=True)
+#     cart.add_to_cart(book_id)
+#     return redirect('cart')
+
+
+@login_required
+def payment(request):
+    context = { "stripe_key": settings.STRIPE_PUBLIC_KEY }
+    return render(request, "payment.html", context)
+
+

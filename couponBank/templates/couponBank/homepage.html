@@ -2,4 +2,17 @@
 
 {% block content %}
 <h1>This is home page</h1>
+    <div id="container">
+    {% for product in products %}
+        <div class="card" style="width: 18rem;" id="cd">
+            <img class="card-img-top" src="{{product.picture.url}}">
+            <div class="card-body">
+                <h5 class="card-title">{{product}}, ${{product.price}}</h5>
+                <p>Posted by: {{product.user}}<p>
+                <p class="card-text">{{product.description|truncatechars:200}}</p>
+                <a href="{% url 'product_detail' pk=product.id %}" class="btn btn-primary">Details...</a>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
 {% endblock %}

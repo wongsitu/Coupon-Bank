@@ -13,4 +13,7 @@ urlpatterns = [
     path('shoppingCart', views.shoppingCart, name='shoppingCart'),
     path('create_product', views.create_product, name='create_product'),
     path('FAQ', views.FAQ, name='FAQ'),
+    path('product/<int:pk>', views.product_detail, name="product_detail"),
+    path('payment', views.payment, name='payment'),
+    # path("checkout", views.checkout, name="checkout")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
