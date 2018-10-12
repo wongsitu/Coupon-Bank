@@ -31,9 +31,11 @@ def homepage(request):
 @login_required
 def profile(request):
     user = User.objects.get(id=request.user.id)
+    user_profile , created = UserProfile.objects.get_or_create(user=user)
     user_offers = Product.objects.filter(user=user)
-    return render(request, 'couponBank/profile.html',{'user_offers': user_offers })
+    return render(request, 'couponBank/profile.html',{'user_offers': user_offers, 'user_profile':user_profile })
 
+@login_required
 def edit_profile(request):
     user = User.objects.get(id=request.user.id)
     user , created = UserProfile.objects.get_or_create(user=user)
@@ -217,4 +219,8 @@ def checkout(request):
 def payment(request):
     user = User.objects.get(id=request.user.id)
     orders = Order.objects.filter(buyer=user)
-    return render(request, "couponBank/payment.html", { "stripe_key": settings.STRIPE_TEST_PUBLIC_KEY, "orders":orders })
+    Total_price = []
+    for obj in orders.filter():
+        Total_price.append(obj.products.get().price)
+    Total_price = sum(Total_price*100)
+    return render(request, "couponBank/payment.html", { "stripe_key": settings.STRIPE_TEST_PUBLIC_KEY, "orders":orders, "Total_price":Total_price })

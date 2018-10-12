@@ -9,7 +9,7 @@
     {% endif%}
     {% for num in products.paginator.page_range%}
         {% if product.number == num %}
-            <strong>{{ num}}</strong>
+            <strong>{{num}}</strong>
         {% elif num > products.number|add:'-3' and num < products.number|add:'3' %}
             {{num}}
         {% endif%}
@@ -31,5 +31,6 @@
         </div>
     </div>
 {% endfor %}
+
 </div>
 {% endblock %}

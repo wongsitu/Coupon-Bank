@@ -3,11 +3,11 @@
 {% block content %}
 <form action="/checkout" method="POST">
     {% for order in orders%}
-        <p>{{order.products.get}} {{order.products.get.price}}</p>
+        <p>{{order.products.get}} $ {{order.products.get.price}}</p>
     {% endfor %}
     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
         data-key="{{stripe_key}}"
-        data-amount="2000"
+        data-amount="{{Total_price}}"
         data-name="Coupon Bank"
         data-description="Your Product"
         data-currency="usd">
