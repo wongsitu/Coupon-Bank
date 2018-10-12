@@ -2,17 +2,34 @@
 
 {% block content %}
 <h1>This is home page</h1>
-    <div id="container">
-    {% for product in products %}
-        <div class="card" style="width: 18rem;" id="cd">
-            <img class="card-img-top" src="{{product.picture.url}}">
-            <div class="card-body">
-                <h5 class="card-title">{{product}}, ${{product.price}}</h5>
-                <p>Posted by: {{product.user}}<p>
-                <p class="card-text">{{product.description|truncatechars:200}}</p>
-                <a href="{% url 'product_detail' pk=product.id %}" class="btn btn-primary">Details...</a>
-            </div>
-        </div>
+<div class="pagination justify-content-center">
+    {% if products.has_previous %}
+        <a href="?page=1"><<<</a>
+        <a href="?page={{products.previous_page_number}}"><</a>
+    {% endif%}
+    {% for num in products.paginator.page_range%}
+        {% if product.number == num %}
+            <strong>{{ num}}</strong>
+        {% elif num > products.number|add:'-3' and num < products.number|add:'3' %}
+            {{num}}
+        {% endif%}
     {% endfor %}
+    {% if products.has_next %}
+        <a href="?page={{products.next_page_number}}">></a>
+        <a href="?page={{products.paginator.num_pages}}">>></a>
+    {% endif%}
+</div>
+<div id="container">
+{% for product in products %}
+    <div class="card" style="width: 18rem;" id="cd">
+        <img class="card-img-top" src="{{product.picture.url}}">
+        <div class="card-body">
+            <h5 class="card-title">{{product}}, ${{product.price}}</h5>
+            <p>Posted by: {{product.user}}<p>
+            <p class="card-text">{{product.description|truncatechars:200}}</p>
+            <a href="{% url 'product_detail' pk=product.id %}" class="btn btn-primary">Details...</a>
+        </div>
     </div>
+{% endfor %}
+</div>
 {% endblock %}

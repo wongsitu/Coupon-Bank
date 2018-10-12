@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
+from django.core.paginator import Paginator
 from django.urls import reverse
 from django.utils import timezone
 from django.db.models import Q
@@ -22,6 +23,9 @@ client = vision.ImageAnnotatorClient(credentials=credentials)
 
 def homepage(request):
     products = Product.objects.all()
+    paginator = Paginator(products,6)
+    page = request.GET.get('page')
+    products = paginator.get_page(page)
     return render(request, 'couponBank/homepage.html',{'products': products })
 
 @login_required
@@ -31,7 +35,20 @@ def profile(request):
     return render(request, 'couponBank/profile.html',{'user_offers': user_offers })
 
 def edit_profile(request):
-    return render(request, 'couponBank/edit_profile.html')
+    user = User.objects.get(id=request.user.id)
+    user , created = UserProfile.objects.get_or_create(user=user)
+    user.save()
+    if request.method == "POST":
+        form = UserProfileForm(request.POST, instance=user)
+        if form.is_valid():
+            user = form.save()
+            if 'profile_pic' in request.FILES:
+                user.profile_pic = request.FILES['profile_pic']
+            user.save()
+            return redirect('userprofile')
+    else:
+        form = UserProfileForm(instance=user)
+    return render(request, 'couponBank/edit_profile.html', {'form': form, 'user': user})
 
 def search(request):
     query = request.GET.get('q')

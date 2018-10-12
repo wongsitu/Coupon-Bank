@@ -2,4 +2,12 @@
 
 {% block content %}
 <h1>My profile form</h1>
+<div class="form">
+    <form enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" name="" value="Save">
+    </form>
+</div>
+
 {% endblock %}
