@@ -23,7 +23,7 @@ client = vision.ImageAnnotatorClient(credentials=credentials)
 
 def homepage(request):
     products = Product.objects.all()
-    paginator = Paginator(products,6)
+    paginator = Paginator(products,8)
     page = request.GET.get('page')
     products = paginator.get_page(page)
     return render(request, 'couponBank/homepage.html',{'products': products })
@@ -47,7 +47,7 @@ def edit_profile(request):
             if 'profile_pic' in request.FILES:
                 user.profile_pic = request.FILES['profile_pic']
             user.save()
-            return redirect('userprofile')
+            return redirect('profile')
     else:
         form = UserProfileForm(instance=user)
     return render(request, 'couponBank/edit_profile.html', {'form': form, 'user': user})
@@ -102,6 +102,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request,user)
+                messages.success(request, 'You have logged in successfully')
                 return redirect('homepage')
             else:
                 return HttpResponse("Your account was inactive.")
@@ -110,7 +111,7 @@ def user_login(request):
             print(f'They used username: {username} and password: {password}')
             return HttpResponse("Invalid login details given")
     else:
-        return render(request, 'couponBank/login.html', {})
+        return render(request, 'couponBank/login.html')
 
 def register(request):
     registered = False
@@ -120,7 +121,9 @@ def register(request):
             user = user_form.save()
             user.set_password(user.password)
             user.save()
+            messages.success(request, 'Thanks for joining')
             registered = True
+            return redirect('homepage')
         else:
             print(user_form.errors)
     else:
@@ -130,6 +133,7 @@ def register(request):
 @login_required
 def user_logout(request):
     logout(request)
+    messages.success(request, 'You have logged out')
     return redirect('homepage')
 
 def get_user_pending_order(request):
@@ -144,23 +148,27 @@ def get_user_pending_order(request):
 @login_required
 def create_product(request):
     user = User.objects.get(id=request.user.id)
-    if request.method == 'POST':
-        form = ProductForm(request.POST, request.FILES)
-        if form.is_valid():
-            product = form.save(commit=False)
-            product.user = request.user
-            product.posted_at = timezone.datetime.now()
-            if 'picture' in request.FILES:
-                picture = request.FILES['picture']
-                product.save()
-                path = "/Users/waikawongsitu/wdi/testing/couponBank/media/picture/"+str(picture)
-                product.brand = detect_logos(path)
-                product.description = detect_text(path)
-                product.save()
-        else:
-            print('\nform is invalid\n')
+    userprofile, status= UserProfile.objects.get_or_create(user=user)
+    if userprofile.phone == None or userprofile.country == None or userprofile.address == None or userprofile.zipcode == None:
+        messages.warning(request, 'You need to insert your profile information before posting a product')
     else:
-        form = ProductForm()
+        if request.method == 'POST':
+            form = ProductForm(request.POST, request.FILES)
+            if form.is_valid():
+                product = form.save(commit=False)
+                product.user = request.user
+                product.posted_at = timezone.datetime.now()
+                if 'picture' in request.FILES:
+                    picture = request.FILES['picture']
+                    product.save()
+                    path = "/Users/waikawongsitu/wdi/testing/couponBank/media/picture/"+str(picture)
+                    product.brand = detect_logos(path)
+                    product.description = detect_text(path)
+                    product.save()
+                    messages.success(request, 'Your product has been posted')
+            else:
+                messages.error(request, 'Error')
+    form = ProductForm()
     return render(request,'couponBank/createProduct.html', {'form': form },{'user': user})
 
 @login_required
@@ -186,9 +194,7 @@ def add_to_cart(request,pk):
     if status:
         order.ref_code = generate_order_id()
         order.save()
-    print("Hello")
-    print(order.get_cart_items())
-    print("Item added to cart")
+    messages.success(request,'Successfully added item to cart')
     return redirect('homepage')
 
 @login_required
@@ -218,6 +224,10 @@ def checkout(request):
 @login_required
 def payment(request):
     user = User.objects.get(id=request.user.id)
+    userprofile, status= UserProfile.objects.get_or_create(user=user)
+    if userprofile.phone == None or userprofile.country == None or userprofile.address == None or userprofile.zipcode == None:
+        messages.warning(request, 'You need to insert your profile information before making a pursache')
+        return redirect('profile')
     orders = Order.objects.filter(buyer=user)
     Total_price = []
     for obj in orders.filter():

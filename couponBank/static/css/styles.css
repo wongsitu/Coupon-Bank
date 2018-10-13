@@ -10,6 +10,7 @@ main{
 
 #container{
     column-count: 4;
+    padding: 1em 0;
 }
 
 #prof_pic{
