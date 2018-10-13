@@ -28,22 +28,25 @@ class Product (models.Model):
     def __str__(self):
         return self.brand
 
-# An individual order
+# An individual order_item
 class Order (models.Model): 
     ref_code = models.CharField(max_length=100)
-    buyer = models.ForeignKey(User,on_delete=models.SET_NULL, null=True) #Many orders to a user
+    buyer = models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
     is_ordered = models.BooleanField(default=False)
-    products = models.ManyToManyField(Product,related_name='products') #Many products to an order
-    date_ordered = models.DateTimeField(blank=True)
-
-    def get_cart_items(self):
-        return self.products.all()
-
-    def cart_total(self):
-        return sum([product.price for product in self.products.all()])
+    products = models.ForeignKey(Product,on_delete=models.CASCADE,related_name='product') #Many products to an order
+    date_ordered = models.DateTimeField()
 
     def __str__(self):
-        prods = self.id
-        return str(prods)
+        return str(self.products)
 
+# class Transaction (models.Model):
+#     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+#     token = models.CharField(max_length=120)
+#     orders = models.ForeignKey(Orders, on_delete=models.CASCADE)
+#     amount = models.DecimalField(max_digits=100, decimal_places=2)
+#     success = models.BooleanField(default=True)
+#     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+
+#     def __str__(self):
+#         return str(self.products)
 

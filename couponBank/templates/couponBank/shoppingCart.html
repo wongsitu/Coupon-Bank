@@ -13,15 +13,15 @@
                     <th scope="col">Options</th>
                 </tr>
             </thead>
-            {% for order in cart_orders %}
+            {% for order in cart_orders.all %}
                 <tbody>
                     <tr>
-                        <th>{{order.products.get.id}}</th>
-                        <td><img img id="thumb" src="{{order.products.get.picture.url}}"></td>
-                        <td>{{order.products.get}}</td>
-                        <td>$ {{order.products.get.price}}</td>
-                        <td>{{order.products.get.posted_at}}</td>
-                        <td><a  href="{% url 'delete_from_cart' pk=order %}" class="btn btn-danger">Remove</a></td>
+                        <th>{{order.products.id}}</th>
+                        <td><img img id="thumb" src="{{order.products.picture.url}}"></td>
+                        <td>{{order.products}}</td>
+                        <td>$ {{order.products.price}}</td>
+                        <td>{{order.products.posted_at}}</td>
+                        <td><a  href="{% url 'delete_from_cart' pk=order.id%}" class="btn btn-danger">Remove</a></td>
                     </tr>
                 </tbody>
             {% endfor %}

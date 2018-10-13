@@ -66,12 +66,12 @@ def FAQ(request):
 @login_required
 def shoppingCart(request):
     user = User.objects.get(id=request.user.id)
-    cart_orders = Order.objects.filter(buyer=user)
-    Total_price = []
-    for obj in cart_orders.filter():
-        Total_price.append(obj.products.get().price)
-    Total_price = sum(Total_price)
-    return render(request, 'couponBank/shoppingCart.html',{'cart_orders': cart_orders, "Total_price":Total_price })
+    cart_orders = Order.objects.filter(buyer=user, is_ordered=False)
+    Total_price = 0
+    for order in cart_orders:
+        Total_price = Total_price + order.products.price
+    print(Total_price)
+    return render(request, 'couponBank/shoppingCart.html', {"cart_orders":cart_orders, "Total_price":Total_price})
 
 def detect_logos(path):
     """Detects logos in the file."""
@@ -136,15 +136,6 @@ def user_logout(request):
     messages.success(request, 'You have logged out')
     return redirect('homepage')
 
-def get_user_pending_order(request):
-    user = User.objects.get(id=request.user.id)
-    order = Order.objects.filter(user=user, is_ordered=False)
-    print(order)
-    if order:
-        print("Aloha")
-        return order[0]
-    return None
-
 @login_required
 def create_product(request):
     user = User.objects.get(id=request.user.id)
@@ -189,11 +180,8 @@ def generate_order_id():
 def add_to_cart(request,pk):
     user = User.objects.get(id=request.user.id)
     product = Product.objects.get(id=pk)
-    order, status = Order.objects.get_or_create(buyer=user,is_ordered=False, date_ordered = timezone.datetime.now())
-    order.products.add(Product.objects.get(id=pk))
-    if status:
-        order.ref_code = generate_order_id()
-        order.save()
+    order = Order.objects.create(ref_code=generate_order_id(), buyer=user, is_ordered=False, products=product, date_ordered = timezone.datetime.now())
+    order.save()
     messages.success(request,'Successfully added item to cart')
     return redirect('homepage')
 
@@ -206,31 +194,46 @@ def delete_from_cart(request,pk):
     return redirect('shoppingCart')
 
 @login_required
-def order_details(request,id):
-    existing_order = get_user_pending_order(request)
-    context = {
-        'order': existing_order
-    }
-    return render(request,"couponBank/summary.html",context)
-
-@login_required
-def checkout(request):
-    existing_order = get_user_pending_order(request)
-    context ={
-        'order': existing_order
-    }
-    return render(request, 'couponBank/checkout.html',context)
-
-@login_required
 def payment(request):
     user = User.objects.get(id=request.user.id)
     userprofile, status= UserProfile.objects.get_or_create(user=user)
     if userprofile.phone == None or userprofile.country == None or userprofile.address == None or userprofile.zipcode == None:
         messages.warning(request, 'You need to insert your profile information before making a pursache')
         return redirect('profile')
-    orders = Order.objects.filter(buyer=user)
+    orders = Order.objects.filter(buyer=user, is_ordered=False)
     Total_price = []
-    for obj in orders.filter():
-        Total_price.append(obj.products.get().price)
+    for obj in orders.filter().all():
+        Total_price.append(obj.products.price)
     Total_price = sum(Total_price*100)
     return render(request, "couponBank/payment.html", { "stripe_key": settings.STRIPE_TEST_PUBLIC_KEY, "orders":orders, "Total_price":Total_price })
+
+
+# @login_required
+# def checkout(request):
+#     existing_order = get_user_pending_order(request)
+#     publishKey = settings.STRIPE_PUBLISHABLE_KEY
+#     if request.method == 'POST':
+#         try:
+#             token = request.POST['stripeToken']
+
+#             charge = stripe.Charge.create(
+#                 amount=100*existing_order.get_cart_total(),
+#                 currency='usd',
+#                 description='Example charge',
+#                 source=token,
+#             )
+#             return redirect(reverse('shopping_cart:update_records',
+#                         kwargs={
+#                             'token': token
+#                         })
+#                     )
+
+#         except stripe.CardError as e:
+#             message.info(request, "Your card has been declined.")
+            
+#     context = {
+#         'order': existing_order,
+#         'STRIPE_PUBLISHABLE_KEY': publishKey
+#     }
+
+#     return render(request, 'shopping_cart/checkout.html', context)
