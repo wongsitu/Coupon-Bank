@@ -31,7 +31,11 @@ def profile(request):
     user = User.objects.get(id=request.user.id)
     user_profile , created = UserProfile.objects.get_or_create(user=user)
     user_offers = Product.objects.filter(user=user)
-    return render(request, 'couponBank/profile.html',{'user_offers': user_offers, 'user_profile':user_profile })
+    user_orders = Transaction.objects.filter(profile=user_profile)
+    for order in user_orders:
+        for brand in order.orders.all():
+            print(brand)
+    return render(request, 'couponBank/profile.html',{'user_offers': user_offers, 'user_orders':user_orders, 'user_profile':user_profile })
 
 @login_required
 def edit_profile(request):
@@ -209,7 +213,7 @@ def payment(request):
 @login_required
 def checkout(request):
     user = User.objects.get(id = request.user.id)
-    print(user)
+    profile = UserProfile.objects.get(user=user)
     cart_orders = Order.objects.filter(buyer=user, is_ordered=False)
     publishKey = settings.STRIPE_TEST_SECRET_KEY
     stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
@@ -225,6 +229,9 @@ def checkout(request):
                 description='Example charge',
                 source=token,
             )
+            cart_orders.update(is_ordered=True)
+            transaction = Transaction.objects.create(profile=profile,token=token,amount=Total_price)
+            transaction.orders.set(cart_orders)
             messages.success(request, "Successfully Pursached.")
             return redirect(reverse('profile'))
         except stripe.error.CardError as e:

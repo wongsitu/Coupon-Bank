@@ -23,6 +23,11 @@
     </div>
     <hr>
     <h2>Recent Pursaches</h2>
+    {% for order in user_orders%}
+        {% for product in order.orders.all %}
+            <p>{{product}} {{product.products.price}}</p>
+        {% endfor %}
+    {% endfor %}
     <hr>
     <h2>Recent Offers</h2>
     <table class="table table-hover">

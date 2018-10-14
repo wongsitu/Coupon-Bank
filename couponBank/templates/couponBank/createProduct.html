@@ -1,4 +1,5 @@
 {% extends "couponBank/base.html" %}
+{% load staticfiles %}
 
 {% block content %}
 <div class="form">
@@ -7,6 +8,7 @@
         {{ form.as_p }}
         <input type="submit" name="" value="Create Offer">
     </form>
+    <img id="product-img" src="{%static 'images/VisionAPI.jpeg'%}">
 </div>
 
 {% endblock %}

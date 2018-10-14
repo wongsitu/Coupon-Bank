@@ -42,6 +42,7 @@ main{
 
 .form{
     margin: 12em;
+    display: flex;
 }
 
 #thumbnail{
@@ -64,4 +65,9 @@ main{
 #thumb{
     width:100px;
     text-align: center;
+}
+
+#product-img{
+    width: 400px;
+    height: 150px;
 }
