@@ -17,6 +17,20 @@ main{
     width: 100px;
 }
 
+#info{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.information{
+    padding: 2em;
+}
+
+.pict{
+    padding: 2em 0;
+}
+
 #cd{
     margin-bottom: 1.5em ;
     -webkit-column-break-inside: avoid;

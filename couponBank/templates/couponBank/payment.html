@@ -2,6 +2,7 @@
 
 {% block content %}
 <form action="/checkout" method="POST">
+    {% csrf_token %}
     {% for order in orders%}
         <p>{{order.products}} $ {{order.products.price}}</p>
     {% endfor %}

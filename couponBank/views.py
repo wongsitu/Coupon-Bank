@@ -1,22 +1,20 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from couponBank.forms import UserForm, UserProfileForm, ProductForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.core import serializers
 from django.core.paginator import Paginator
 from django.urls import reverse
 from django.utils import timezone
 from django.db.models import Q
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, QueryDict
-from .models import User, UserProfile, Product, Order
-from django.views.decorators.csrf import csrf_exempt
+from .models import User, UserProfile, Product, Order, Transaction
 import io
 import os
 from google.oauth2 import service_account
 from google.cloud import vision
 from google.cloud.vision import types
 from django.conf import settings
+import stripe
 
 credentials = service_account.Credentials. from_service_account_file('/Users/waikawongsitu/wdi/testing/.env/recognizion-a609ecd9ea34.json')
 client = vision.ImageAnnotatorClient(credentials=credentials)
@@ -208,32 +206,38 @@ def payment(request):
     return render(request, "couponBank/payment.html", { "stripe_key": settings.STRIPE_TEST_PUBLIC_KEY, "orders":orders, "Total_price":Total_price })
 
 
-# @login_required
-# def checkout(request):
-#     existing_order = get_user_pending_order(request)
-#     publishKey = settings.STRIPE_PUBLISHABLE_KEY
-#     if request.method == 'POST':
-#         try:
-#             token = request.POST['stripeToken']
+@login_required
+def checkout(request):
+    user = User.objects.get(id = request.user.id)
+    print(user)
+    cart_orders = Order.objects.filter(buyer=user, is_ordered=False)
+    publishKey = settings.STRIPE_TEST_SECRET_KEY
+    stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
+    Total_price = 0
+    for order in cart_orders:
+        Total_price = Total_price + order.products.price
+    if request.method == 'POST':
+        try:
+            token = request.POST['stripeToken']
+            charge = stripe.Charge.create(
+                amount=100*Total_price,
+                currency='usd',
+                description='Example charge',
+                source=token,
+            )
+            messages.success(request, "Successfully Pursached.")
+            return redirect(reverse('profile'))
+        except stripe.error.CardError as e:
+            messages.info(request, "Your card has been declined.")
+    context = {
+        'order': cart_orders,
+        'STRIPE_TEST_SECRET_KEY': publishKey
+    }
+    return render(request, 'shopping_cart/checkout.html', context)
 
-#             charge = stripe.Charge.create(
-#                 amount=100*existing_order.get_cart_total(),
-#                 currency='usd',
-#                 description='Example charge',
-#                 source=token,
-#             )
-#             return redirect(reverse('shopping_cart:update_records',
-#                         kwargs={
-#                             'token': token
-#                         })
-#                     )
-
-#         except stripe.CardError as e:
-#             message.info(request, "Your card has been declined.")
-            
-#     context = {
-#         'order': existing_order,
-#         'STRIPE_PUBLISHABLE_KEY': publishKey
-#     }
-
-#     return render(request, 'shopping_cart/checkout.html', context)
+# Test Card
+# wongsitu@ksu.edu
+# 4242 4242 4242 4242
+# 02 / 2019 
+# 424
+# (424) 242-4242

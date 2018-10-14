@@ -3,18 +3,24 @@
 
 {% block content %}
     <h1>My profile page</h1>
-        <p>{{user_profile.user.username}}</p>
-        {% if user_profile.profile_pic %}
-            <img id="prof_pic" src="{{ user.user_profile.profile_pic.url }}" alt="">  
-        {% else %}
-            <img id="prof_pic" src="{%static 'images/not_available.png'%}" alt="">
-        {% endif %}
-        <p>Email: {{user_profile.user.email}}</p>
-        <p>Phone: {{user_profile.phone}}</p>
-        <p>Billing address: {{user_profile.address}}</p>
-        <p>Zip Code: {{user_profile.zipcode}}</p>
-        <p>Country: {{user_profile.country}}</p>
-        <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+    <div id="info">
+        <div class="pict">
+            <h5>{{user_profile.user.username}}</h5>
+            {% if user_profile.profile_pic %}
+                <img id="prof_pic" src="{{ user.user_profile.profile_pic.url }}" alt="">  
+            {% else %}
+                <img id="prof_pic" src="{%static 'images/not_available.png'%}" alt="">
+            {% endif %}
+        </div>
+        <div class="information">
+            <p>Email: {{user_profile.user.email}}</p>
+            <p>Phone: {{user_profile.phone}}</p>
+            <p>Billing address: {{user_profile.address}}</p>
+            <p>Zip Code: {{user_profile.zipcode}}</p>
+            <p>Country: {{user_profile.country}}</p>
+            <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+        </div>
+    </div>
     <hr>
     <h2>Recent Pursaches</h2>
     <hr>
@@ -26,7 +32,7 @@
                 <th scope="col">Picture</th>
                 <th scope="col">Brand</th>
                 <th scope="col">price</th>
-                <th scope="col">posted at</th>
+                <th scope="col">added at</th>
                 <th scope="col">Options</th>
             </tr>
         </thead>

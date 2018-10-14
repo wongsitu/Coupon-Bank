@@ -15,9 +15,7 @@
         {% if product.number == num %}
         <li class="page-item actice">
             <a class="page-link">
-                
-                    {{num}}
-                
+                {{num}}
             </a>
         </li>
         {% elif num > products.number|add:'-3' and num < products.number|add:'3' %}
