@@ -33,6 +33,7 @@ def profile(request):
     user_offers = Product.objects.filter(user=user)
     user_orders = Transaction.objects.filter(profile=user_profile)
     for order in user_orders:
+        print(order.orders.all())
         for brand in order.orders.all():
             print(brand)
     return render(request, 'couponBank/profile.html',{'user_offers': user_offers, 'user_orders':user_orders, 'user_profile':user_profile })
@@ -109,9 +110,8 @@ def user_login(request):
             else:
                 return HttpResponse("Your account was inactive.")
         else:
-            print("Someone tried to login and failed.")
-            print(f'They used username: {username} and password: {password}')
-            return HttpResponse("Invalid login details given")
+            messages.warning(request,"Invalid login details given")
+            return redirect('user_login')
     else:
         return render(request, 'couponBank/login.html')
 
@@ -182,9 +182,13 @@ def generate_order_id():
 def add_to_cart(request,pk):
     user = User.objects.get(id=request.user.id)
     product = Product.objects.get(id=pk)
+    name = product.brand
+    if product.user == user:
+        messages.info(request,"It's your own product")
+        return redirect('homepage')
     order = Order.objects.create(ref_code=generate_order_id(), buyer=user, is_ordered=False, products=product, date_ordered = timezone.datetime.now())
     order.save()
-    messages.success(request,'Successfully added item to cart')
+    messages.success(request,'Successfully added {} coupon to cart'.format(name))
     return redirect('homepage')
 
 @login_required
@@ -229,9 +233,9 @@ def checkout(request):
                 description='Example charge',
                 source=token,
             )
-            cart_orders.update(is_ordered=True)
             transaction = Transaction.objects.create(profile=profile,token=token,amount=Total_price)
             transaction.orders.set(cart_orders)
+            cart_orders.update(is_ordered=True)
             messages.success(request, "Successfully Pursached.")
             return redirect(reverse('profile'))
         except stripe.error.CardError as e:
@@ -242,9 +246,22 @@ def checkout(request):
     }
     return render(request, 'shopping_cart/checkout.html', context)
 
-# Test Card
+# Test Cards
 # wongsitu@ksu.edu
 # 4242 4242 4242 4242
 # 02 / 2019 
 # 424
 # (424) 242-4242
+
+# waikawong@gmail.com
+# 4242 4242 4242 4242
+# 05 / 2019
+# 123
+# (123) 123-123
+
+def detele_transaction(request,pk):
+    transaction_to_delete = Transaction.objects.get(id=pk)
+    if transaction_to_delete != None:
+        transaction_to_delete.delete()
+        print("Item has been deleted")
+    return redirect('profile')

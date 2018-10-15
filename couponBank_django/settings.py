@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_countries',
     "djstripe",
+    'watermarker',
 ]
 
 MIDDLEWARE = [

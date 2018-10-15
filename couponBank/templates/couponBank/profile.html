@@ -7,7 +7,7 @@
         <div class="pict">
             <h5>{{user_profile.user.username}}</h5>
             {% if user_profile.profile_pic %}
-                <img id="prof_pic" src="{{ user.user_profile.profile_pic.url }}" alt="">  
+                <img id="prof_pic" src="{{ user_profile.profile_pic.url }}" alt="">  
             {% else %}
                 <img id="prof_pic" src="{%static 'images/not_available.png'%}" alt="">
             {% endif %}
@@ -24,9 +24,20 @@
     <hr>
     <h2>Recent Pursaches</h2>
     {% for order in user_orders%}
-        {% for product in order.orders.all %}
-            <p>{{product}} {{product.products.price}}</p>
-        {% endfor %}
+        <div class="card text-center spacing">
+            <div class="card-header">
+                <strong>Order code:</strong> {{order.token}}
+            </div>
+            <div class="card-body">
+                {% for product in order.orders.all %}
+                    <p class="card-text">{{product}} {{product.products.price}}</p>
+                {% endfor %}
+                <a href="#" class="btn btn-danger">Delete</a>
+            </div>
+            <div class="card-footer text-muted">
+                {{order.timestamp}}
+            </div>
+        </div>
     {% endfor %}
     <hr>
     <h2>Recent Offers</h2>

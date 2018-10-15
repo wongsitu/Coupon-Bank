@@ -1,30 +1,38 @@
 {% extends "couponBank/base.html" %}
-
+{% load staticfiles %}
 {% block content %}
     <h1>Shopping Cart</h1>
-    <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">Order id</th>
-                    <th scope="col">Picture</th>
-                    <th scope="col">Brand</th>
-                    <th scope="col">price</th>
-                    <th scope="col">posted at</th>
-                    <th scope="col">Options</th>
-                </tr>
-            </thead>
-            {% for order in cart_orders.all %}
-                <tbody>
+    {% if cart_orders|length == 0 %}
+        <div id="empty-view">
+            <img id="empty-logo" src="{%static 'images/shoppingCart.png'%}">
+            <p> Your don't have items in your cart now</p>
+            <a href="{% url 'homepage' %}" class="btn btn-primary">Continue shopping</a>
+        </div>
+    {% else %}
+        <table class="table table-hover">
+                <thead>
                     <tr>
-                        <th>{{order.products.id}}</th>
-                        <td><img img id="thumb" src="{{order.products.picture.url}}"></td>
-                        <td>{{order.products}}</td>
-                        <td>$ {{order.products.price}}</td>
-                        <td>{{order.products.posted_at}}</td>
-                        <td><a  href="{% url 'delete_from_cart' pk=order.id%}" class="btn btn-danger">Remove</a></td>
+                        <th scope="col">Order id</th>
+                        <th scope="col">Picture</th>
+                        <th scope="col">Brand</th>
+                        <th scope="col">price</th>
+                        <th scope="col">posted at</th>
+                        <th scope="col">Options</th>
                     </tr>
-                </tbody>
-            {% endfor %}
-    </table>
-    <p>Total: $ {{Total_price}} <a  href="{% url 'payment' %}" class="btn btn-success">Check out</a></p>
+                </thead>
+                {% for order in cart_orders.all %}
+                    <tbody>
+                        <tr>
+                            <th>{{order.products.id}}</th>
+                            <td><img img id="thumb" src="{{order.products.picture.url}}"></td>
+                            <td>{{order.products}}</td>
+                            <td>$ {{order.products.price}}</td>
+                            <td>{{order.products.posted_at}}</td>
+                            <td><a  href="{% url 'delete_from_cart' pk=order.id%}" class="btn btn-danger">Remove</a></td>
+                        </tr>
+                    </tbody>
+                {% endfor %}
+        </table>
+        <p>Total: $ {{Total_price}} <a  href="{% url 'payment' %}" class="btn btn-success">Check out</a></p>
+    {% endif %}
 {% endblock %}
