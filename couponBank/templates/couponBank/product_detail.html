@@ -7,11 +7,29 @@
     </div>
     <div class="description">
         <h1>{{product.brand}} Coupon</h1>
-        <p>Posted by: {{product.user}} at {{product.posted_at}}</p>
+        <p><strong>Posted by:</strong> {{product.user}} <strong>at</strong> {{product.posted_at}}</p>
         <p>{{product.description}}</p>
-        <p>Price: ${{product.price}}</p>
+        <p><strong>Price:</strong> ${{product.price}}</p>
         <a href="{% url 'add_to_cart' pk=product.id %}" class="btn btn-primary">Add to Shopping Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
-        <a href="{% url 'add_to_cart' pk=product.id %}" class="btn btn-success">Add Review <i class="fas fa-comments"></i></a>
+        <a href="{% url 'review_create' pk=product.id %}" class="btn btn-success">Add Review <i class="fas fa-comments"></i></a>
     </div>
+</div>
 <div>
+    <h2>Reviews:</h2>
+    {% for review in reviews %}
+        <div class="col-sm-5" style="margin-bottom: 1em">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{review.user}}</h5>
+                    <p class="card-text">{{review.description}}</p>
+                    <p class="card-text">{{review.post_date}}</p>
+                    {% if currently_log == review.user %}
+                        <a href="{% url 'review_edit' pk=product.id id=review.id %}" class="btn btn-warning">Edit</a> <a href="{% url 'review_delete' pk=product.id id=review.id %}" class="btn btn-danger">Delete</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+    
 {% endblock %}

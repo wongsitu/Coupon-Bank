@@ -51,3 +51,15 @@ class Transaction (models.Model):
         # return self.orders
         return str(self.orders)
 
+class Reviews(models.Model):
+    product = models.ForeignKey(Product,on_delete=models.CASCADE,related_name='review')
+    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='review')
+    title = models.CharField(max_length=50, blank=True)
+    description = models.TextField(max_length=300, blank=True)
+    post_date = models.DateTimeField(auto_now_add=True, auto_now=False)
+
+    def __str__(self):
+        return self.title
+
+
+

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from couponBank.forms import UserForm, UserProfileForm, ProductForm
+from couponBank.forms import UserForm, UserProfileForm, ProductForm, ReviewForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -7,7 +7,7 @@ from django.core.paginator import Paginator
 from django.urls import reverse
 from django.utils import timezone
 from django.db.models import Q
-from .models import User, UserProfile, Product, Order, Transaction
+from .models import User, UserProfile, Product, Order, Transaction, Reviews
 import io
 import os
 from google.oauth2 import service_account
@@ -71,7 +71,6 @@ def shoppingCart(request):
     Total_price = 0
     for order in cart_orders:
         Total_price = Total_price + order.products.price
-    print(Total_price)
     return render(request, 'couponBank/shoppingCart.html', {"cart_orders":cart_orders, "Total_price":Total_price})
 
 def detect_logos(path):
@@ -143,7 +142,7 @@ def user_logout(request):
 @login_required
 def create_product(request):
     user = User.objects.get(id=request.user.id)
-    userprofile, status= UserProfile.objects.get_or_create(user=user)
+    userprofile, status = UserProfile.objects.get_or_create(user=user)
     if userprofile.phone == None or userprofile.country == None or userprofile.address == None or userprofile.zipcode == None:
         messages.warning(request, 'You need to insert your profile information before posting a product')
     else:
@@ -156,7 +155,7 @@ def create_product(request):
                 if 'picture' in request.FILES:
                     picture = request.FILES['picture']
                     product.save()
-                    path = "/Users/waikawongsitu/wdi/testing/couponBank/media/picture/"+str(picture)
+                    path = settings.MEDIA_DIR + "/picture/" + str(picture)
                     product.brand = detect_logos(path)
                     product.description = detect_text(path)
                     product.save()
@@ -174,7 +173,12 @@ def delete_product(request,pk):
 
 def product_detail(request,pk):
     product = Product.objects.get(id=pk)
-    return render(request,'couponBank/product_detail.html', {'product': product})
+    reviews = Reviews.objects.filter(product=product.id)
+    if (request.user == None):
+        return render(request,'couponBank/product_detail.html', {'product': product,'reviews':reviews})
+    currently_log = User.objects.get(id=request.user.id)
+    print(currently_log)
+    return render(request,'couponBank/product_detail.html', {'product': product,'reviews':reviews, 'currently_log':currently_log})
 
 def generate_order_id():
     date_str = str(timezone.datetime.now())
@@ -198,7 +202,7 @@ def delete_from_cart(request,pk):
     item_to_delete = Order.objects.get(id=pk)
     if item_to_delete != None:
         item_to_delete.delete()
-        print("Item has been deleted")
+        messages.success(request,"Item has been deleted")
     return redirect('shoppingCart')
 
 @login_required
@@ -274,3 +278,38 @@ def invoice(request,pk):
 # 05 / 2019
 # 123
 # (123) 123-123
+
+@login_required
+def review_create(request, pk):
+    order = Product.objects.get(id=pk)
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user = request.user
+            review.product = order
+            review.save()
+            return redirect('product_detail', pk=order.id)
+    else:
+        form = ReviewForm()
+    return render(request, 'couponBank/review_form.html', {'form': form})
+
+@login_required
+def review_delete(request, id, pk):
+    currently_logged_user = User.objects.get(id=request.user.id)
+    order = Product.objects.get(id=pk)
+    Reviews.objects.get(id=id).delete()
+    messages.success(request,"Review deleted")
+    return redirect('product_detail', pk=order.pk)
+
+@login_required
+def review_edit(request, id, pk):
+    review = Reviews.objects.get(id=pk)
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, instance=review)
+        if form.is_valid():
+            review = form.save()
+            return redirect('product_detail', pk=comment.id)
+    else:
+        form = ReviewForm(instance=comment)
+    return render(request, 'couponBank/review_form.html', {'form': form})

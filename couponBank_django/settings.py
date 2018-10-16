@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'couponBank',
-    'django_extensions',
     'django_countries',
     "djstripe",
     'watermarker',

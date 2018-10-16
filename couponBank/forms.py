@@ -1,5 +1,5 @@
 from django import forms
-from .models import UserProfile, Product, Order
+from .models import UserProfile, Product, Order, Reviews
 from django.contrib.auth.models import User
 
 class UserForm(forms.ModelForm):
@@ -18,3 +18,7 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = ('picture', 'price')
 
+class ReviewForm(forms.ModelForm):
+    class Meta():
+        model = Reviews
+        fields = ('title','description')
