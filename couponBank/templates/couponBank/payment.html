@@ -1,17 +1,24 @@
 {% extends 'couponBank/base.html' %}
 
 {% block content %}
-<form action="/checkout" method="POST">
-    {% csrf_token %}
-    {% for order in orders%}
-        <p>{{order.products}} $ {{order.products.price}}</p>
-    {% endfor %}
-    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-        data-key="{{stripe_key}}"
-        data-amount="{{Total_price}}"
-        data-name="Coupon Bank"
-        data-description="Your Product"
-        data-currency="usd">
-    </script>
-</form>
+<div class="card w-50">
+    <h5 class="card-header" style="text-align: center">Order Summary</h5>
+    <div class="card-body">
+        <h5 class="card-title">Products:</h5>
+        {% for order in orders%}
+            <p class="card-text">{{order.products}} $ {{order.products.price}}</p>
+        {% endfor %}
+    </div>
+    <form action="/checkout" method="POST">
+        {% csrf_token %}
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="{{stripe_key}}"
+            data-amount="{{Total_price}}"
+            data-name="Coupon Bank"
+            data-description="Your Product"
+            data-currency="usd">
+        </script>
+    </form>
+</div>
+
 {% endblock %}

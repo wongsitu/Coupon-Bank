@@ -17,7 +17,7 @@ from django.conf import settings
 import stripe
 import random, string
 
-credentials = service_account.Credentials. from_service_account_file('/Users/waikawongsitu/wdi/testing/.env/recognizion-a609ecd9ea34.json')
+credentials = service_account.Credentials.from_service_account_file('/Users/waikawongsitu/wdi/testing/.env/recognizion-a609ecd9ea34.json')
 client = vision.ImageAnnotatorClient(credentials=credentials)
 
 def homepage(request):
@@ -266,7 +266,7 @@ def invoice(request,pk):
     transaction = Transaction.objects.get(id=pk)
     return render(request,'couponBank/invoice.html',{'transaction': transaction,'profile':profile,'user':user})
 
-# Test Cards
+# Test Stripe Cards
 # wongsitu@ksu.edu
 # 4242 4242 4242 4242
 # 02 / 2019 
@@ -304,12 +304,13 @@ def review_delete(request, id, pk):
 
 @login_required
 def review_edit(request, id, pk):
-    review = Reviews.objects.get(id=pk)
+    review = Reviews.objects.get(id=id)
+    order = Product.objects.get(id=pk)
     if request.method == 'POST':
         form = ReviewForm(request.POST, instance=review)
         if form.is_valid():
             review = form.save()
-            return redirect('product_detail', pk=comment.id)
+            return redirect('product_detail', pk=order.id)
     else:
-        form = ReviewForm(instance=comment)
+        form = ReviewForm(instance=review)
     return render(request, 'couponBank/review_form.html', {'form': form})

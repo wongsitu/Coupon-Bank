@@ -1,5 +1,4 @@
 {% extends 'couponBank/base.html' %}
-{% load watermark %}
 {% block content %}
 <div class="single-view">
     <div>
@@ -21,7 +20,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">{{review.user}}</h5>
-                    <p class="card-text">{{review.description}}</p>
+                    <p class="card-text"><strong>{{review.title}}</strong><br> {{review.description}}</p>
                     <p class="card-text">{{review.post_date}}</p>
                     {% if currently_log == review.user %}
                         <a href="{% url 'review_edit' pk=product.id id=review.id %}" class="btn btn-warning">Edit</a> <a href="{% url 'review_delete' pk=product.id id=review.id %}" class="btn btn-danger">Delete</a>

@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'couponBank',
     'django_countries',
     "djstripe",
-    'watermarker',
 ]
 
 MIDDLEWARE = [

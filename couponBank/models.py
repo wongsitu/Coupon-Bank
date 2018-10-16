@@ -6,7 +6,7 @@ from django_countries.fields import CountryField
 
 # Userprofile
 class UserProfile(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    user = models.OneToOneField(User,on_delete=models.CASCADE, related_name='profile')
     profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
     phone = models.CharField(blank=True,max_length=50)
     country = CountryField(blank_label='(select country)',blank=True)

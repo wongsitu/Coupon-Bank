@@ -49,8 +49,8 @@
                     {% endfor %}
                 </div>
                 <div>
-                    <a href="{% url 'detele_transaction' pk=order.id%}" class="btn btn-danger">Archieve</a>
-                    <a href="{% url 'invoice' pk=order.id%}" class="btn btn-info">Invoice</a>
+                    <a href="{% url 'detele_transaction' pk=order.id%}" class="btn btn-danger">Archieve <i class="fas fa-archive"></i></a>
+                    <a href="{% url 'invoice' pk=order.id%}" class="btn btn-info">Invoice <i class="fas fa-file-invoice-dollar"></i></a>
                 </div>
             </div>
         </div>
@@ -84,7 +84,18 @@
         </tbody>
     </table>
     <h2 class="subtitle">Pending Transactions</h2>
+    <div class="column">
     {% for pending in pending_orders.all%}
-        <p>{{pending}} {{pending.products.price}} {{pending.buyer}}</p>
+        <div class="card border-primary mb-3" style="max-width: 20rem" id="cd">
+            <div class="card-header"><h5>{{pending}}</h5></div>
+            <div class="card-body text-primary">
+                <h5 class="card-title">Buyer: {{pending.buyer}}</h5>
+                <h5 class="card-title">price: $ {{pending.products.price}}</h5>
+                <p class="card-text">Shipping Address:<br>
+                    {{pending.buyer.profile.address}}<br>
+                    {{pending.buyer.profile.zipcode}}, {{pending.buyer.profile.country}}</p>
+            </div>
+        </div>
     {% endfor%}
+    </div>
 {% endblock %}
