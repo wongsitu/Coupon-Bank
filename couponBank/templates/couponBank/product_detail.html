@@ -11,6 +11,7 @@
         <p>{{product.description}}</p>
         <p>Price: ${{product.price}}</p>
         <a href="{% url 'add_to_cart' pk=product.id %}" class="btn btn-primary">Add to Shopping Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+        <a href="{% url 'add_to_cart' pk=product.id %}" class="btn btn-success">Add Review <i class="fas fa-comments"></i></a>
     </div>
 <div>
 {% endblock %}

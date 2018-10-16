@@ -24,4 +24,5 @@ urlpatterns = [
     path('delete_from_cart/<int:pk>', views.delete_from_cart, name="delete_from_cart"),
     path('detele_transaction/<int:pk>', views.detele_transaction, name="detele_transaction"),
     path('payment', views.payment, name='payment'),
+    path('invoice/<int:pk>', views.invoice, name="invoice"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

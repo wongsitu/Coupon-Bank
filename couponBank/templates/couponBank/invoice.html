@@ -1,0 +1,43 @@
+
+{% load staticfiles %}
+
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<div>
+    <p id="title"><strong>Final details for Order {{transaction.token}}</strong></p>
+    <section>
+        <strong>Order Placed:</strong> {{transaction.timestamp}}<br>
+        <strong>Waikamazon order number:</strong> {{transaction.token}}<br>
+        <strong>Buyer:</strong> {{profile}}<br>
+        <strong>Order Total:</strong> ${{transaction.amount}}<br>
+    </section>
+    <div class="solid">
+        <div class="solid" id="title">
+            <strong>Shipped on {{transaction.timestamp}}</strong>
+        </div>
+        <div class="solid" style="display: flex;justify-content: space-between">
+            <ul>
+                <strong>Items Ordered:</strong>
+            {% for item in transaction.orders.all%}
+                <li>
+                    {{item}} ${{item.products.price}}
+                    <p>Sold by: {{item.products.user}}</p>
+                </li>
+            {% endfor %}
+            </ul>
+            <div>
+                <strong>Price: </strong>$ {{transaction.amount}}
+            </div>
+        </div>
+        <div class="solid">
+            <strong>Shipping Address</strong> 
+            <p>
+                {{profile}} <br>
+                {{profile.address}}, {{profile.zipcode}}, {{profile.country}}
+            </p>
+        </div>
+    </div>
+    <p id="title">To view the status of your order, return to <a href="{%url 'profile'%}">Profile.</a></p>
+    <p id="title">© 1995-2018, Waikamazon.com, Inc. or its affiliates </p>
+</div>
+
+

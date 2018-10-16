@@ -1,11 +1,10 @@
 {% extends "couponBank/base.html" %}
 {% load staticfiles %}
-
 {% block content %}
     <h1>My profile page</h1>
     <div id="info">
         <div class="pict">
-            <h5>{{user_profile.user.username}}</h5>
+            <h5 style="text-align:center">{{user_profile.user.username}}</h5>
             {% if user_profile.profile_pic %}
                 <img id="prof_pic" src="{{ user_profile.profile_pic.url }}" alt="">  
             {% else %}
@@ -13,34 +12,51 @@
             {% endif %}
         </div>
         <div class="information">
-            <p>Email: {{user_profile.user.email}}</p>
-            <p>Phone: {{user_profile.phone}}</p>
-            <p>Billing address: {{user_profile.address}}</p>
-            <p>Zip Code: {{user_profile.zipcode}}</p>
-            <p>Country: {{user_profile.country}}</p>
+            <p><strong>Email:</strong> {{user_profile.user.email}}</p>
+            <p><strong>Phone:</strong> {{user_profile.phone}}</p>
+            <p><strong>Billing address:</strong> {{user_profile.address}}</p>
+            <p><strong>Zip Code:</strong> {{user_profile.zipcode}}</p>
+            <p><strong>Country:</strong> {{user_profile.country}}</p>
             <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
         </div>
     </div>
-    <hr>
-    <h2>Recent Pursaches</h2>
+    
+    <h2 class="subtitle">Recent Purchases</h2>
     {% for order in user_orders%}
         <div class="card text-center spacing">
-            <div class="card-header">
-                <strong>Order code:</strong> {{order.token}}
+            <div class="card-header" id="space">
+                <p><strong>Order placed at:</strong> {{order.timestamp}}</p>
+                <p><strong>Total:</strong> $ {{order.amount}}</p>
+                <p><strong>Shipping to:</strong>
+                    <a title="Header" data-toggle="popover" data-trigger="hover" data-content="Hello world">
+                        {{order.profile}}
+                    </a>
+                </p>
+                <p><strong>Order #:</strong> {{order.token}}</p>
             </div>
-            <div class="card-body">
-                {% for product in order.orders.all %}
-                    <p class="card-text">{{product}} {{product.products.price}}</p>
-                {% endfor %}
-                <a href="#" class="btn btn-danger">Delete</a>
-            </div>
-            <div class="card-footer text-muted">
-                {{order.timestamp}}
+            <div class="card-body" id="flex-on-my-ex">
+                <div>
+                    {% for product in order.orders.all %}
+                    <div class="alignment">
+                        <div>
+                            <img src="{{product.products.picture.url}}" id="image">
+                        </div>
+                        <div class="image-text">
+                            <p class="card-text">{{product}} ${{product.products.price}}</p>
+                            <p class="card-text"> Sold by: {{product.products.user}}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div>
+                    <a href="{% url 'detele_transaction' pk=order.id%}" class="btn btn-danger">Archieve</a>
+                    <a href="{% url 'invoice' pk=order.id%}" class="btn btn-info">Invoice</a>
+                </div>
             </div>
         </div>
     {% endfor %}
-    <hr>
-    <h2>Recent Offers</h2>
+    
+    <h2 class="subtitle">Recent Offers</h2>
     <table class="table table-hover">
         <thead>
             <tr>
@@ -67,6 +83,6 @@
             {% endfor%}
         </tbody>
     </table>
-    <hr>
-    <h2>Pending Transactions</h2>
+    
+    <h2 class="subtitle">Pending Transactions</h2>
 {% endblock %}

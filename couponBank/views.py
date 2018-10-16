@@ -15,6 +15,7 @@ from google.cloud import vision
 from google.cloud.vision import types
 from django.conf import settings
 import stripe
+import random, string
 
 credentials = service_account.Credentials. from_service_account_file('/Users/waikawongsitu/wdi/testing/.env/recognizion-a609ecd9ea34.json')
 client = vision.ImageAnnotatorClient(credentials=credentials)
@@ -32,10 +33,6 @@ def profile(request):
     user_profile , created = UserProfile.objects.get_or_create(user=user)
     user_offers = Product.objects.filter(user=user)
     user_orders = Transaction.objects.filter(profile=user_profile)
-    for order in user_orders:
-        print(order.orders.all())
-        for brand in order.orders.all():
-            print(brand)
     return render(request, 'couponBank/profile.html',{'user_offers': user_offers, 'user_orders':user_orders, 'user_profile':user_profile })
 
 @login_required
@@ -97,6 +94,9 @@ def detect_text(path):
         description.append(text.description)
     return(description[0])
 
+def random_generator(size=12, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for x in range(size))
+
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -108,7 +108,8 @@ def user_login(request):
                 messages.success(request, 'You have logged in successfully')
                 return redirect('homepage')
             else:
-                return HttpResponse("Your account was inactive.")
+                messages.warning(request,"Your account was inactive.")
+                return redirect('user_login')
         else:
             messages.warning(request,"Invalid login details given")
             return redirect('user_login')
@@ -213,7 +214,6 @@ def payment(request):
     Total_price = sum(Total_price*100)
     return render(request, "couponBank/payment.html", { "stripe_key": settings.STRIPE_TEST_PUBLIC_KEY, "orders":orders, "Total_price":Total_price })
 
-
 @login_required
 def checkout(request):
     user = User.objects.get(id = request.user.id)
@@ -233,7 +233,8 @@ def checkout(request):
                 description='Example charge',
                 source=token,
             )
-            transaction = Transaction.objects.create(profile=profile,token=token,amount=Total_price)
+            randId = random_generator()
+            transaction = Transaction.objects.create(profile=profile,token=randId,amount=Total_price)
             transaction.orders.set(cart_orders)
             cart_orders.update(is_ordered=True)
             messages.success(request, "Successfully Pursached.")
@@ -245,6 +246,20 @@ def checkout(request):
         'STRIPE_TEST_SECRET_KEY': publishKey
     }
     return render(request, 'shopping_cart/checkout.html', context)
+
+@login_required
+def detele_transaction(request,pk):
+    transaction_to_delete = Transaction.objects.get(id=pk)
+    if transaction_to_delete != None:
+        transaction_to_delete.delete()
+    return redirect('profile')
+
+@login_required
+def invoice(request,pk):
+    user = User.objects.get(id = request.user.id)
+    profile = UserProfile.objects.get(user=user)
+    transaction = Transaction.objects.get(id=pk)
+    return render(request,'couponBank/invoice.html',{'transaction': transaction,'profile':profile,'user':user})
 
 # Test Cards
 # wongsitu@ksu.edu
@@ -258,10 +273,3 @@ def checkout(request):
 # 05 / 2019
 # 123
 # (123) 123-123
-
-def detele_transaction(request,pk):
-    transaction_to_delete = Transaction.objects.get(id=pk)
-    if transaction_to_delete != None:
-        transaction_to_delete.delete()
-        print("Item has been deleted")
-    return redirect('profile')

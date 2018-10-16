@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="form">
-    <form  enctype="multipart/form-data" method="POST">
+    <form  enctype="multipart/form-data" method="POST" class="ground">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" name="" value="Create Offer">
