@@ -33,7 +33,8 @@ def profile(request):
     user_profile , created = UserProfile.objects.get_or_create(user=user)
     user_offers = Product.objects.filter(user=user)
     user_orders = Transaction.objects.filter(profile=user_profile)
-    return render(request, 'couponBank/profile.html',{'user_offers': user_offers, 'user_orders':user_orders, 'user_profile':user_profile })
+    pending_orders = Order.objects.filter(is_ordered=True).filter(products__user=user)
+    return render(request, 'couponBank/profile.html',{'user_offers': user_offers, 'user_orders':user_orders, 'user_profile':user_profile, 'pending_orders':pending_orders })
 
 @login_required
 def edit_profile(request):

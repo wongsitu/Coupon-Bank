@@ -83,6 +83,8 @@
             {% endfor%}
         </tbody>
     </table>
-    
     <h2 class="subtitle">Pending Transactions</h2>
+    {% for pending in pending_orders.all%}
+        <p>{{pending}} {{pending.products.price}} {{pending.buyer}}</p>
+    {% endfor%}
 {% endblock %}
