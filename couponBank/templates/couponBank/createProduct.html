@@ -4,6 +4,7 @@
 {% block content %}
 <div class="form">
     <form  enctype="multipart/form-data" method="POST" class="ground">
+        <h3>Post product:</h3>
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" name="" value="Create Offer">

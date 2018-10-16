@@ -1,7 +1,7 @@
 {% extends "couponBank/base.html" %}
 
 {% block content %}
-    <form enctype="multipart/form-data" method="POST">
+    <form class='ground' enctype="multipart/form-data" method="POST" >
         {% csrf_token %}
         {{ user_form.as_p }}
         <input type="submit" class="btn btn-primary" name="" value="Register">

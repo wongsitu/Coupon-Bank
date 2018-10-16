@@ -42,9 +42,9 @@
                                 <i class="fa fa-user" aria-hidden="true"></i>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{% url 'profile' %}">My profile </a>
+                                <a class="dropdown-item" href="{% url 'profile' %}">My profile <i class="fa fa-user" aria-hidden="true"></i></a>
                                 <a class="dropdown-item" href="{% url 'shoppingCart' %}">Shopping Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
-                                <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                                <a class="dropdown-item" href="{% url 'logout' %}">Logout <i class="fas fa-sign-out-alt"></i></a>
                             </div>
                         </li>
                         {% else %}
@@ -53,8 +53,8 @@
                                 <i class="fa fa-user" aria-hidden="true"></i>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{% url 'register' %}">Register</a>
-                                <a class="dropdown-item" href="{% url 'user_login' %}">Login</a>
+                                <a class="dropdown-item" href="{% url 'register' %}">Register <i class="fas fa-registered"></i></a>
+                                <a class="dropdown-item" href="{% url 'user_login' %}">Login <i class="fas fa-sign-in-alt"></i></a>
                             </div>
                         </li>
                         {% endif %}

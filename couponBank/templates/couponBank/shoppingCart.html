@@ -33,6 +33,6 @@
                     </tbody>
                 {% endfor %}
         </table>
-        <p>Total: $ {{Total_price}} <a  href="{% url 'payment' %}" class="btn btn-success">Check out</a></p>
+        <p style="text-align: center"><strong>Total:</strong> $ {{Total_price}} <a  href="{% url 'payment' %}" class="btn btn-success">Check out</a></p>
     {% endif %}
 {% endblock %}
