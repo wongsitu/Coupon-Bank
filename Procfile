@@ -1,1 +1,1 @@
-web: gunicorn {name of your project folder}.wsgi --log-file -
+web: gunicorn couponBank_django.wsgi --log-file -
