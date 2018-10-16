@@ -16,8 +16,14 @@ from google.cloud.vision import types
 from django.conf import settings
 import stripe
 import random, string
+import json
 
-credentials = service_account.Credentials.from_service_account_file(os.environ.get('GS_CREDENTIALS'))
+credentials_raw = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
+
+service_account_info = json.loads(credentials_raw)
+
+credentials = service_account.Credentials.from_service_account_info(service_account_info)
+
 client = vision.ImageAnnotatorClient(credentials=credentials)
 
 def homepage(request):
