@@ -1,6 +1,41 @@
 {% extends "couponBank/base.html" %}
 
 {% block content %}
-<h1>This is about page</h1>
 
+<article class="wrapper">
+        <h1 style="text-align: center">Wai Ka Wong</h1>
+        <img src="./images/profile-picture.png" alt="" class="profile">
+        <p style="text-align: center">Full Stack Web Developer</p>
+        <div class="resume" style="margin: 0 15em">    
+            
+            <p id="personal">
+                    <i class="fa fa-address-card" aria-hidden="true" id="per"></i>
+                A very perseverant individual, with a 
+                strong desire to learn, seeking to obtain a full time 
+                position in tech industry where I can 
+                utilize my physics/math background as well as web development skills for 
+                problem solving.
+            
+            </p>
+            
+            <p id="laptop">
+                <i class="fa fa-laptop" aria-hidden="true" id="lap"></i> Programming passionate, always open to new ideas and ready 
+                to build new apps.
+            </p>
+        
+            <p id="education">
+                    <i class="fa fa-university" aria-hidden="true" id="ed"></i>
+                General Assembly (2018) <br/>
+                Kansas State University (2014-2017) <br/>
+                Pontificia Universidad Catolica del Peru (2013-2014)
+            </p>
+            <div id="information" style="text-align:center">
+                <h2>Contact me</h2>
+                <p><i class="fa fa-envelope-open" aria-hidden="true"></i> wongsitu@ksu.edu</p>
+                <p><i class="fa fa-phone-square" aria-hidden="true"></i> (415) 699-4491</p>
+                <p><a href="https://github.com/wongsitu"><i class="fab fa-github" aria-hidden="true"></i> www.github.com/wongsitu</a></p>
+                <p><a href="https://www.linkedin.com/in/waika-wong/"><i class="fab fa-linkedin"></i> www.linkedin.com</a></p>
+            </div>
+        </div>
+    </article>
 {% endblock %}

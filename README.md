@@ -2,6 +2,8 @@
 
 Coupon Bank is a peer-to-peer lending aplication that allows users to buy and sell coupons. The motivation of this project was to create an exchange platform that would allow users to trade 'long tail' coupons.
 
+Link: https://waikamazon.herokuapp.com/
+
 ## Features
 
 - User authentication: Users are able to Log in, Log out and Register
@@ -20,7 +22,7 @@ Coupon Bank is a peer-to-peer lending aplication that allows users to buy and se
 
 The hardest part of couponBank was to set up GCVA. First, You need to have a google account. Then you go to https://console.cloud.google.com/ and create a new project. You will be able to retrieve an json file that contains all your credentials. It should look something like this:
 
-```
+```json
     {
         "type": "service_account",
         "project_id": "marcanuy-XXXXXX",
@@ -50,7 +52,7 @@ If you call .env. You should see:
 
 Because GOOGLE_APPLICATION_CREDENTIALS is a string, we need to require it and convert it back to json. In views.py:
 
-```
+```Python
     import json
     from google.oauth2 import service_account
     from google.cloud import vision
@@ -67,11 +69,105 @@ Now your credentials are available, you should test one of the scripts that Goog
 
 ## Stripe payment API
 
+To set up stripe payment, you'll need to create a stripe account and retrieve the API key
+
+```Python
+    STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_SECRET_KEY", "pk_YOUR_TEST_PUBLIC_KEY")
+    STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "pk_YOUR_TEST_SECRET_KEY")
+```
+
+Then we set up a function that will redirect us to the payment method on accepting the transaction
+
+```python
+    from yourapp import settings
+
+    def payment_form(request):
+
+        context = { "stripe_key": settings.STRIPE_PUBLIC_KEY }
+        return render(request, "yourtemplate.html", context)
+```
+
+This will render a button on your template html and on click it will pop up a modal. Below we can see many fields were filled, so lets go over them. Data-ket is just the stripe key that was provided on the website, data-amount is the total price that will be charged, the last 2 digits are decimal places, finally, data-description, data-image, data-name are pretty intuitive.
+
+```python
+    <form action="/checkout" method="POST">
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="stripe_key" # Make sure to wrap the variable name with double {}
+            data-amount="2000"
+            data-name="Your APp"
+            data-description="Your Product"
+            data-image="Link to your logo"
+            data-currency="usd">
+        </script>
+    </form>
+
+```
+
+Set the url:
+
+```python
+    urls = [
+        path("checkout", views.checkout, name="checkout")
+    ]
+```
+
+On views.py, we write a function that will handle the payment and transaction
+
+```python
+    @login_required
+    def payment(request):
+        user = User.objects.get(id=request.user.id)
+        userprofile, status= UserProfile.objects.get_or_create(user=user)
+        if userprofile.phone == None or userprofile.country == None or userprofile.address == None or userprofile.zipcode == None:
+            messages.warning(request, 'You need to insert your profile information before making a pursache')
+            return redirect('profile')
+        orders = Order.objects.filter(buyer=user, is_ordered=False)
+        Total_price = []
+        for obj in orders.filter().all():
+            Total_price.append(obj.products.price)
+        Total_price = sum(Total_price*100)
+        return render(request, "couponBank/payment.html", { "stripe_key": settings.STRIPE_TEST_PUBLIC_KEY, "orders":orders, "Total_price":Total_price })
+
+    @login_required
+    def checkout(request):
+        user = User.objects.get(id = request.user.id)
+        profile = UserProfile.objects.get(user=user)
+        cart_orders = Order.objects.filter(buyer=user, is_ordered=False)
+        publishKey = settings.STRIPE_TEST_SECRET_KEY
+        stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
+        Total_price = 0
+        for order in cart_orders:
+            Total_price = Total_price + order.products.price
+        if request.method == 'POST':
+            try:
+                token = request.POST['stripeToken']
+                charge = stripe.Charge.create(
+                    amount=100*Total_price,
+                    currency='usd',
+                    description='Example charge',
+                    source=token,
+                )
+                randId = random_generator()
+                transaction = Transaction.objects.create(profile=profile,token=randId,amount=Total_price)
+                transaction.orders.set(cart_orders)
+                cart_orders.update(is_ordered=True)
+                messages.success(request, "Successfully Pursached.")
+                return redirect(reverse('profile'))
+            except stripe.error.CardError as e:
+                messages.info(request, "Your card has been declined.")
+        context = {
+            'order': cart_orders,
+            'STRIPE_TEST_SECRET_KEY': publishKey
+        }
+        return render(request, 'shopping_cart/checkout.html', context)
+
+```
+
 ## Models
 
 This is the user profile model, which includes all information for the shipping as well as contact information
 
-```
+```Python
     class UserProfile(models.Model):
         user = models.OneToOneField(User,on_delete=models.CASCADE, related_name='profile')
         profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
@@ -86,7 +182,7 @@ This is the user profile model, which includes all information for the shipping 
 
 Product model represents an individual item that was posted by the user, and it's related by the foreign key
 
-```
+```Python
     class Product (models.Model):
         brand = models.CharField(max_length=1000,blank=True)
         description = models.TextField(max_length=1000,blank=True)
@@ -101,7 +197,7 @@ Product model represents an individual item that was posted by the user, and it'
 
 Order represents the single item that was grabbed and put on the shopping cart
 
-```
+```Python
     class Order (models.Model): 
         ref_code = models.CharField(max_length=100)
         buyer = models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
@@ -115,7 +211,7 @@ Order represents the single item that was grabbed and put on the shopping cart
 
 Transaction is just the list of items that was bought and it's related to the Order class via many to many field.
 
-```
+```Python
     class Transaction (models.Model):
         profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
         token = models.CharField(max_length=120)
@@ -130,7 +226,7 @@ Transaction is just the list of items that was bought and it's related to the Or
 
 Finally, Reviews just represents all comments that are related to the product.
 
-```
+```Python
     class Reviews(models.Model):
         product = models.ForeignKey(Product,on_delete=models.CASCADE,related_name='review')
         user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='review')
