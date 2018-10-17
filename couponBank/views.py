@@ -86,7 +86,11 @@ def detect_logos(path):
     image = vision.types.Image(content=content)
     response = client.logo_detection(image=image)
     logos = response.logo_annotations
-    return (logos[0].description)
+    try:
+        logo = logos[0].description
+    except IndexError:
+        logo = None
+    return (logo)
 
 def detect_text(path):
     """Detects text in the file."""
@@ -98,7 +102,11 @@ def detect_text(path):
     description = []
     for text in texts:
         description.append(text.description)
-    return(description[0])
+    try:
+        descript = description[0]
+    except IndexError:
+        descript = None
+    return(descript)
 
 def random_generator(size=12, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for x in range(size))
@@ -164,6 +172,9 @@ def create_product(request):
                     path = settings.MEDIA_DIR + "/picture/" + str(picture)
                     product.brand = detect_logos(path)
                     product.description = detect_text(path)
+                    if product.brand == None or product.description == None:
+                        messages.warning(request,"Coupon is not valid")
+                        return render(request,'couponBank/createProduct.html', {'form': form },{'user': user})
                     product.save()
                     messages.success(request, 'Your product has been posted')
             else:

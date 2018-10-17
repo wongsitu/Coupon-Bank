@@ -16,14 +16,11 @@ urlpatterns = [
     path('checkout', views.checkout, name='checkout'),
     path('create_product', views.create_product, name='create_product'),
     path('search', views.search, name='search'),
-
     path('product/<int:pk>/create_review', views.review_create, name='review_create'),
     path('product/<int:pk>/delete_review/<int:id>', views.review_delete, name='review_delete'),
     path('product/<int:pk>/review_edit/<int:id>', views.review_edit, name='review_edit'),
-
     path('product/<int:pk>', views.product_detail, name="product_detail"),
     path('delete_product/<int:pk>', views.delete_product, name="delete_product"),
-
     path('add_to_cart/<int:pk>', views.add_to_cart, name='add_to_cart'),
     path('delete_from_cart/<int:pk>', views.delete_from_cart, name="delete_from_cart"),
     path('detele_transaction/<int:pk>', views.detele_transaction, name="detele_transaction"),
