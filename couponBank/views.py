@@ -185,6 +185,7 @@ def create_product(request):
 @login_required
 def delete_product(request,pk):
     product_to_delete = Product.objects.get(id=pk)
+    messages.success(request, "You {} coupon has been removed".format(product_to_delete))
     product_to_delete.delete()
     return redirect('profile')
 
