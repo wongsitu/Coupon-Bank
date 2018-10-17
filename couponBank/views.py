@@ -180,12 +180,11 @@ def delete_product(request,pk):
 def product_detail(request,pk):
     product = Product.objects.get(id=pk)
     reviews = Reviews.objects.filter(product=product.id)
-    if (request.user == None):
-        return render(request,'couponBank/product_detail.html', {'product': product,'reviews':reviews})
-    currently_log = User.objects.get(id=request.user.id)
-    print(currently_log)
-    return render(request,'couponBank/product_detail.html', {'product': product,'reviews':reviews, 'currently_log':currently_log})
-
+    if request.user.is_authenticated:
+        currently_log = User.objects.get(id=request.user.id)
+        return render(request,'couponBank/product_detail.html', {'product': product,'reviews':reviews, 'currently_log':currently_log})
+    return render(request,'couponBank/product_detail.html', {'product': product,'reviews':reviews})
+    
 def generate_order_id():
     date_str = str(timezone.datetime.now())
     return date_str
@@ -271,19 +270,6 @@ def invoice(request,pk):
     profile = UserProfile.objects.get(user=user)
     transaction = Transaction.objects.get(id=pk)
     return render(request,'couponBank/invoice.html',{'transaction': transaction,'profile':profile,'user':user})
-
-# Test Stripe Cards
-# wongsitu@ksu.edu
-# 4242 4242 4242 4242
-# 02 / 2019 
-# 424
-# (424) 242-4242
-
-# waikawong@gmail.com
-# 4242 4242 4242 4242
-# 05 / 2019
-# 123
-# (123) 123-123
 
 @login_required
 def review_create(request, pk):
