@@ -20,6 +20,10 @@ Link: https://waikamazon.herokuapp.com/
 
 ![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/profilepage.png)
 
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/offers.png)
+
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/invoice_receipt.png)
+
 ## Features
 
 - User authentication: Users are able to Log in, Log out and Register
@@ -143,7 +147,9 @@ On views.py, we write a function that will handle the payment and transaction
             Total_price.append(obj.products.price)
         Total_price = sum(Total_price*100)
         return render(request, "couponBank/payment.html", { "stripe_key": settings.STRIPE_TEST_PUBLIC_KEY, "orders":orders, "Total_price":Total_price })
+```
 
+```python
     @login_required
     def checkout(request):
         user = User.objects.get(id = request.user.id)
