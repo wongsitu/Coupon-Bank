@@ -26,4 +26,5 @@ urlpatterns = [
     path('detele_transaction/<int:pk>', views.detele_transaction, name="detele_transaction"),
     path('payment', views.payment, name='payment'),
     path('invoice/<int:pk>', views.invoice, name="invoice"),
+    path('pdf_invoice_view/<int:pk>', views.pdf_invoice_view, name="pdf_invoice_view"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

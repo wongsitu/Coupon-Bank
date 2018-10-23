@@ -2,9 +2,8 @@
 {% load staticfiles %}
 
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-<div class="invoice-container">
+<div>
     <p id="title"><strong>Final details for Order {{transaction.token}}</strong></p>
-    <a href="{% url 'pdf_invoice_view' pk=transaction.id %}">Print this page for your records.</a>
     <section>
         <strong>Order Placed:</strong> {{transaction.timestamp}}<br>
         <strong>Waikamazon order number:</strong> {{transaction.token}}<br>
@@ -37,8 +36,5 @@
             </p>
         </div>
     </div>
-    <p id="title">To view the status of your order, return to <a href="{%url 'profile'%}">Profile.</a></p>
     <p id="title">© 1995-2018, Waikamazon.com, Inc. or its affiliates </p>
 </div>
-
-

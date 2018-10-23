@@ -106,6 +106,10 @@ main{
 .image-text{
     margin:1em;
 }
+
+.invoice-container{
+    margin: 0 10em;
+}
 /* --------------------- */
 
 .cont {

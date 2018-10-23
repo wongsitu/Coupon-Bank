@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from couponBank.forms import UserForm, UserProfileForm, ProductForm, ReviewForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -7,16 +6,22 @@ from django.core.paginator import Paginator
 from django.urls import reverse
 from django.utils import timezone
 from django.db.models import Q
+from django.http import HttpResponse
+from django.template.loader import get_template
+from django.conf import settings
+from couponBank.forms import UserForm, UserProfileForm, ProductForm, ReviewForm
 from .models import User, UserProfile, Product, Order, Transaction, Reviews
-import io
-import os
 from google.oauth2 import service_account
 from google.cloud import vision
 from google.cloud.vision import types
-from django.conf import settings
 import stripe
+import io
+from io import BytesIO
+import os
 import random, string
 import json
+from xhtml2pdf import pisa
+
 
 credentials_raw = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
 
@@ -40,7 +45,13 @@ def profile(request):
     user_offers = Product.objects.filter(user=user)
     user_orders = Transaction.objects.filter(profile=user_profile)
     pending_orders = Order.objects.filter(is_ordered=True).filter(products__user=user)
-    return render(request, 'couponBank/profile.html',{'user_offers': user_offers, 'user_orders':user_orders, 'user_profile':user_profile, 'pending_orders':pending_orders })
+    content = {
+        'user_offers': user_offers,
+        'user_orders':user_orders, 
+        'user_profile':user_profile, 
+        'pending_orders':pending_orders 
+        }
+    return render(request, 'couponBank/profile.html', content)
 
 @login_required
 def edit_profile(request):
@@ -57,12 +68,19 @@ def edit_profile(request):
             return redirect('profile')
     else:
         form = UserProfileForm(instance=user)
-    return render(request, 'couponBank/edit_profile.html', {'form': form, 'user': user})
+    content = {
+        'form': form,
+        'user': user,
+        }
+    return render(request, 'couponBank/edit_profile.html', content)
 
 def search(request):
     query = request.GET.get('q')
     searched_products = Product.objects.filter(Q(brand__icontains=query)|Q(description__icontains=query))
-    return render(request, 'couponBank/searchpage.html',{'searched_products': searched_products })
+    content = {
+        'searched_products': searched_products 
+        }
+    return render(request, 'couponBank/searchpage.html',content)
 
 def about(request):
     return render(request, 'couponBank/about.html')
@@ -77,7 +95,11 @@ def shoppingCart(request):
     Total_price = 0
     for order in cart_orders:
         Total_price = Total_price + order.products.price
-    return render(request, 'couponBank/shoppingCart.html', {"cart_orders":cart_orders, "Total_price":Total_price})
+    content = {
+        "cart_orders":cart_orders,
+        "Total_price":Total_price
+        }
+    return render(request, 'couponBank/shoppingCart.html', content)
 
 def detect_logos(path):
     """Detects logos in the file."""
@@ -174,13 +196,13 @@ def create_product(request):
                     product.description = detect_text(path)
                     if product.brand == None or product.description == None:
                         messages.warning(request,"Coupon is not valid")
-                        return render(request,'couponBank/createProduct.html', {'form': form },{'user': user})
+                        return render(request,'couponBank/createProduct.html', {'form': form ,'user': user})
                     product.save()
                     messages.success(request, 'Your product has been posted')
             else:
                 messages.error(request, 'Error')
     form = ProductForm()
-    return render(request,'couponBank/createProduct.html', {'form': form },{'user': user})
+    return render(request,'couponBank/createProduct.html', {'form': form,'user': user})
 
 @login_required
 def delete_product(request,pk):
@@ -234,7 +256,12 @@ def payment(request):
     for obj in orders.filter().all():
         Total_price.append(obj.products.price)
     Total_price = sum(Total_price*100)
-    return render(request, "couponBank/payment.html", { "stripe_key": settings.STRIPE_TEST_PUBLIC_KEY, "orders":orders, "Total_price":Total_price })
+    content = { 
+        "stripe_key": settings.STRIPE_TEST_PUBLIC_KEY, 
+        "orders":orders, 
+        "Total_price":Total_price 
+        }
+    return render(request, "couponBank/payment.html", content)
 
 @login_required
 def checkout(request):
@@ -266,7 +293,7 @@ def checkout(request):
     context = {
         'order': cart_orders,
         'STRIPE_TEST_SECRET_KEY': publishKey
-    }
+        }
     return render(request, 'shopping_cart/checkout.html', context)
 
 @login_required
@@ -281,7 +308,12 @@ def invoice(request,pk):
     user = User.objects.get(id = request.user.id)
     profile = UserProfile.objects.get(user=user)
     transaction = Transaction.objects.get(id=pk)
-    return render(request,'couponBank/invoice.html',{'transaction': transaction,'profile':profile,'user':user})
+    content = {
+        'transaction': transaction,
+        'profile':profile,
+        'user':user
+        }
+    return render(request,'couponBank/invoice.html',content)
 
 @login_required
 def review_create(request, pk):
@@ -300,7 +332,6 @@ def review_create(request, pk):
 
 @login_required
 def review_delete(request, id, pk):
-    currently_logged_user = User.objects.get(id=request.user.id)
     order = Product.objects.get(id=pk)
     Reviews.objects.get(id=id).delete()
     messages.success(request,"Review deleted")
@@ -318,3 +349,26 @@ def review_edit(request, id, pk):
     else:
         form = ReviewForm(instance=review)
     return render(request, 'couponBank/review_form.html', {'form': form})
+
+
+def render_to_pdf(path: str, params: dict):
+        template = get_template(path)
+        html = template.render(params)
+        response = BytesIO()
+        pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), response)
+        if not pdf.err:
+            return HttpResponse(response.getvalue(), content_type='application/pdf')
+        else:
+            return HttpResponse("Error Rendering PDF", status=400)
+
+@login_required
+def pdf_invoice_view(request,pk):
+    user = User.objects.get(id = request.user.id)
+    profile = UserProfile.objects.get(user=user)
+    transaction = Transaction.objects.get(id=pk)
+    results = {
+        'transaction': transaction,
+        'profile':profile,
+        'user':user
+        }
+    return render_to_pdf( 'couponBank/pdf_invoice.html', {'pagesize':'A4', 'results': results})
