@@ -1,10 +1,10 @@
 # Coupon Bank
 
-Coupon Bank is a peer-to-peer lending aplication that allows users to buy and sell coupons. The motivation of this project was to create an exchange platform that would allow users to trade 'long tail' coupons.
+Coupon Bank is a peer-to-peer lending aplication that allows users to buy and sell coupons. The motivation of this project was to create an exchange platform that would allow users to trade 'long tail' coupons. It offers most of the main functionalities of any trading website, the current design was heavily inspired by Amazon. To run this application,you will need to get Google credentials json file and an Stripe Key. The set up for both are explained in the sections below.
 
 Link: https://waikamazon.herokuapp.com/
 
-# Images
+## Images
 
 ![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/homepage.png)
 
