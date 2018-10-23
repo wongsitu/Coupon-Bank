@@ -4,11 +4,27 @@ Coupon Bank is a peer-to-peer lending aplication that allows users to buy and se
 
 Link: https://waikamazon.herokuapp.com/
 
+# Images
+
+![Alt text](https://github.com/wongsitu/projectOne/blob/waikabranch/assets/homepage.png)
+
+![Alt text](https://github.com/wongsitu/projectOne/blob/waikabranch/assets/coupon1.png)
+
+![Alt text](https://github.com/wongsitu/projectOne/blob/waikabranch/assets/coupon2.png)
+
+![Alt text](https://github.com/wongsitu/projectOne/blob/waikabranch/assets/aboutpage.png)
+
+![Alt text](https://github.com/wongsitu/projectOne/blob/waikabranch/assets/post_product.png)
+
+![Alt text](https://github.com/wongsitu/projectOne/blob/waikabranch/assets/FAQ.png)
+
+![Alt text](https://github.com/wongsitu/projectOne/blob/waikabranch/assets/profilepage.png)
+
 ## Features
 
 - User authentication: Users are able to Log in, Log out and Register
-- Google Cloud Vision API: When the users upload their coupons, GCVA will grab all the information from the coupon using visual recognition. This includdes the Logo and description
-- Stripe: Includes payment system that handles all transactions
+- Google Cloud Vision API: When the users upload their coupons, GCVA will grab all the information from the coupon using visual recognition. This includdes the Logo and description. If the coupon is not valid, it will return an invalid message
+- Stripe: Includes payment system that handles all transactions. It takes a pertentage of the total price as revenue for the website
 - CRUD functionality: Users are able to create, read, update and delete reviews. Also they are able to create, read and delete coupons that were posted/ordered
 
 ## Technologies
