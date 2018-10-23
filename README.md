@@ -6,19 +6,19 @@ Link: https://waikamazon.herokuapp.com/
 
 # Images
 
-![Alt text](https://github.com/wongsitu/projectOne/blob/waikabranch/assets/homepage.png)
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/homepage.png)
 
-![Alt text](https://github.com/wongsitu/projectOne/blob/waikabranch/assets/coupon1.png)
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/coupon1.png)
 
-![Alt text](https://github.com/wongsitu/projectOne/blob/waikabranch/assets/coupon2.png)
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/coupon2.png)
 
-![Alt text](https://github.com/wongsitu/projectOne/blob/waikabranch/assets/aboutpage.png)
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/aboutpage.png)
 
-![Alt text](https://github.com/wongsitu/projectOne/blob/waikabranch/assets/post_product.png)
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/post_product.png)
 
-![Alt text](https://github.com/wongsitu/projectOne/blob/waikabranch/assets/FAQ.png)
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/FAQ.png)
 
-![Alt text](https://github.com/wongsitu/projectOne/blob/waikabranch/assets/profilepage.png)
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/profilepage.png)
 
 ## Features
 
