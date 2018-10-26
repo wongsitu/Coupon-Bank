@@ -20,7 +20,7 @@ from io import BytesIO
 import os
 import random, string
 import json
-# from xhtml2pdf import pisa
+from xhtml2pdf import pisa
 
 
 credentials_raw = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
@@ -351,24 +351,24 @@ def review_edit(request, id, pk):
     return render(request, 'couponBank/review_form.html', {'form': form})
 
 
-# def render_to_pdf(path: str, params: dict):
-#         template = get_template(path)
-#         html = template.render(params)
-#         response = BytesIO()
-#         pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), response)
-#         if not pdf.err:
-#             return HttpResponse(response.getvalue(), content_type='application/pdf')
-#         else:
-#             return HttpResponse("Error Rendering PDF", status=400)
+def render_to_pdf(path: str, params: dict):
+        template = get_template(path)
+        html = template.render(params)
+        response = BytesIO()
+        pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), response)
+        if not pdf.err:
+            return HttpResponse(response.getvalue(), content_type='application/pdf')
+        else:
+            return HttpResponse("Error Rendering PDF", status=400)
 
-# @login_required
-# def pdf_invoice_view(request,pk):
-#     user = User.objects.get(id = request.user.id)
-#     profile = UserProfile.objects.get(user=user)
-#     transaction = Transaction.objects.get(id=pk)
-#     results = {
-#         'transaction': transaction,
-#         'profile':profile,
-#         'user':user
-#         }
-#     return render_to_pdf( 'couponBank/pdf_invoice.html', {'pagesize':'A4', 'results': results})
+@login_required
+def pdf_invoice_view(request,pk):
+    user = User.objects.get(id = request.user.id)
+    profile = UserProfile.objects.get(user=user)
+    transaction = Transaction.objects.get(id=pk)
+    results = {
+        'transaction': transaction,
+        'profile':profile,
+        'user':user
+        }
+    return render_to_pdf( 'couponBank/pdf_invoice.html', {'pagesize':'A4', 'results': results})
