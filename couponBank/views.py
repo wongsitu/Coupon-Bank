@@ -351,15 +351,15 @@ def review_edit(request, id, pk):
     return render(request, 'couponBank/review_form.html', {'form': form})
 
 
-# def render_to_pdf(path: str, params: dict):
-#         template = get_template(path)
-#         html = template.render(params)
-#         response = BytesIO()
-#         pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), response)
-#         if not pdf.err:
-#             return HttpResponse(response.getvalue(), content_type='application/pdf')
-#         else:
-#             return HttpResponse("Error Rendering PDF", status=400)
+def render_to_pdf(path: str, params: dict):
+        template = get_template(path)
+        html = template.render(params)
+        response = BytesIO()
+        pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), response)
+        if not pdf.err:
+            return HttpResponse(response.getvalue(), content_type='application/pdf')
+        else:
+            return HttpResponse("Error Rendering PDF", status=400)
 
 @login_required
 def pdf_invoice_view(request,pk):
