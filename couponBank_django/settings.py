@@ -30,9 +30,9 @@ STRIPE_LIVE_SECRET_KEY = os.environ.get("STRIPE_LIVE_SECRET_KEY", STRIPE_LIVE_SE
 
 STRIPE_TEST_PUBLIC_KEY = os.environ.get("STRIPE_TEST_PUBLIC_KEY", "pk_test_FYAdQzMIDlnuwxjpfdDoDZfq")
 STRIPE_TEST_SECRET_KEY = os.environ.get("STRIPE_TEST_SECRET_KEY", STRIPE_LIVE_SECRET_KEY)
-STRIPE_LIVE_MODE = True  # Change to True in production
+STRIPE_LIVE_MODE = False  # Change to True in production
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
