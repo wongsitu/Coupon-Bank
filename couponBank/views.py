@@ -157,6 +157,7 @@ def register(request):
             user.save()
             messages.success(request, 'Thanks for joining')
             registered = True
+            login(request, user)
             return redirect('homepage')
         else:
             print(user_form.errors)
