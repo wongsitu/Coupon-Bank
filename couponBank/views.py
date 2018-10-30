@@ -83,6 +83,7 @@ def search(request):
     return render(request, 'couponBank/searchpage.html',content)
 
 def about(request):
+    print(settings.AWS_S3_CUSTOM_DOMAIN)
     return render(request, 'couponBank/about.html')
 
 def FAQ(request):
@@ -101,24 +102,23 @@ def shoppingCart(request):
         }
     return render(request, 'couponBank/shoppingCart.html', content)
 
-def detect_logos(path):
-    """Detects logos in the file."""
-    with io.open(path, 'rb') as image_file:
-        content = image_file.read()
-    image = vision.types.Image(content=content)
+def detect_logos(uri):
+    print(uri)
+    image = vision.types.Image()
+    image.source.image_uri = uri
     response = client.logo_detection(image=image)
     logos = response.logo_annotations
     try:
         logo = logos[0].description
     except IndexError:
         logo = None
+    print(logos)
     return (logo)
 
-def detect_text(path):
-    """Detects text in the file."""
-    with io.open(path, 'rb') as image_file:
-        content = image_file.read()
-    image = vision.types.Image(content=content)
+def detect_text(uri):
+    print(uri)
+    image = vision.types.Image()
+    image.source.image_uri = uri
     response = client.text_detection(image=image)
     texts = response.text_annotations
     description = []
@@ -128,6 +128,7 @@ def detect_text(path):
         descript = description[0]
     except IndexError:
         descript = None
+    print(description)
     return(descript)
 
 def random_generator(size=12, chars=string.ascii_uppercase + string.digits):
@@ -191,7 +192,7 @@ def create_product(request):
                 if 'picture' in request.FILES:
                     picture = request.FILES['picture']
                     product.save()
-                    path = settings.MEDIA_DIR + "/picture/" + str(picture)
+                    path = 'https://s3-us-west-1.amazonaws.com/couponbank/media/media/picture/' + str(picture)
                     product.brand = detect_logos(path)
                     product.description = detect_text(path)
                     if product.brand == None or product.description == None:
