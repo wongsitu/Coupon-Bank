@@ -82,7 +82,6 @@ def search(request):
     return render(request, 'couponBank/searchpage.html',content)
 
 def about(request):
-    print(settings.MEDIA_URL)
     return render(request, 'couponBank/about.html')
 
 def FAQ(request):
@@ -110,7 +109,6 @@ def detect_logos(uri):
         logo = logos[0].description
     except IndexError:
         logo = None
-    print(logos)
     return (logo)
 
 def detect_text(uri):
@@ -125,7 +123,6 @@ def detect_text(uri):
         descript = description[0]
     except IndexError:
         descript = None
-    print(description)
     return(descript)
 
 def random_generator(size=12, chars=string.ascii_uppercase + string.digits):
@@ -188,8 +185,8 @@ def create_product(request):
                 product.posted_at = timezone.datetime.now()
                 if 'picture' in request.FILES:
                     picture = request.FILES['picture']
+                    product.save()
                     path = 'https://s3-us-west-1.amazonaws.com/' + settings.AWS_STORAGE_BUCKET_NAME + '/media/media/picture/' + str(picture)
-                    print(path)
                     product.brand = detect_logos(path)
                     product.description = detect_text(path)
                     if product.brand == None or product.description == None:
