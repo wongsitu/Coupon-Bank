@@ -22,7 +22,6 @@ import random, string
 import json
 from xhtml2pdf import pisa
 
-
 credentials_raw = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
 
 service_account_info = json.loads(credentials_raw)
@@ -83,7 +82,7 @@ def search(request):
     return render(request, 'couponBank/searchpage.html',content)
 
 def about(request):
-    print(settings.AWS_S3_CUSTOM_DOMAIN)
+    print(settings.MEDIA_URL)
     return render(request, 'couponBank/about.html')
 
 def FAQ(request):
@@ -103,7 +102,6 @@ def shoppingCart(request):
     return render(request, 'couponBank/shoppingCart.html', content)
 
 def detect_logos(uri):
-    print(uri)
     image = vision.types.Image()
     image.source.image_uri = uri
     response = client.logo_detection(image=image)
@@ -116,7 +114,6 @@ def detect_logos(uri):
     return (logo)
 
 def detect_text(uri):
-    print(uri)
     image = vision.types.Image()
     image.source.image_uri = uri
     response = client.text_detection(image=image)
@@ -191,8 +188,8 @@ def create_product(request):
                 product.posted_at = timezone.datetime.now()
                 if 'picture' in request.FILES:
                     picture = request.FILES['picture']
-                    product.save()
-                    path = 'https://s3-us-west-1.amazonaws.com/couponbank/media/media/picture/' + str(picture)
+                    path = 'https://s3-us-west-1.amazonaws.com/' + settings.AWS_STORAGE_BUCKET_NAME + '/media/media/picture/' + str(picture)
+                    print(path)
                     product.brand = detect_logos(path)
                     product.description = detect_text(path)
                     if product.brand == None or product.description == None:
@@ -350,7 +347,6 @@ def review_edit(request, id, pk):
     else:
         form = ReviewForm(instance=review)
     return render(request, 'couponBank/review_form.html', {'form': form})
-
 
 def render_to_pdf(path: str, params: dict):
         template = get_template(path)
