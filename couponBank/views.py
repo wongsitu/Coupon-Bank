@@ -210,8 +210,9 @@ def product_detail(request,pk):
     product = Product.objects.get(id=pk)
     reviews = Reviews.objects.filter(product=product.id)
     if request.user.is_authenticated:
+        form = ReviewForm(request.POST)
         currently_log = User.objects.get(id=request.user.id)
-        return render(request,'couponBank/product_detail.html', {'product': product,'reviews':reviews, 'currently_log':currently_log})
+        return render(request,'couponBank/product_detail.html', {'product': product,'reviews':reviews, 'currently_log':currently_log, 'form': form})
     return render(request,'couponBank/product_detail.html', {'product': product,'reviews':reviews})
     
 def generate_order_id():
@@ -323,7 +324,7 @@ def review_create(request, pk):
             return redirect('product_detail', pk=order.id)
     else:
         form = ReviewForm()
-    return render(request, 'couponBank/review_form.html', {'form': form})
+    return render(request, 'couponBank/product_detail.html')
 
 @login_required
 def review_delete(request, id, pk):

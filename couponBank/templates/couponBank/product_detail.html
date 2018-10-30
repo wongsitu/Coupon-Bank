@@ -11,7 +11,7 @@
         <p><strong>Price:</strong> ${{product.price}}</p>
         {% if request.user.is_authenticated %}
             <a href="{% url 'add_to_cart' pk=product.id %}" class="btn btn-primary">Add to Shopping Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
-            <a href="{% url 'review_create' pk=product.id %}" class="btn btn-success">Add Review <i class="fas fa-comments"></i></a>
+            <a href="{% url 'review_create' pk=product.id %}" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">Add Review <i class="fas fa-comments"></i></a>
         {% endif %}
     </div>
 </div>
@@ -31,6 +31,32 @@
             </div>
         </div>
     {% endfor %}
+</div>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form enctype="multipart/form-data" action="{% url 'review_create' pk=product.id %}" method="POST">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Create Review</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% csrf_token %}
+                <label>Title</label>
+                <p>{{ form.title }}</p>
+                <label>Description</label>
+                <p>{{ form.description }}</p>
+            </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" name="" value="Save">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
     
 {% endblock %}
