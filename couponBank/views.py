@@ -324,7 +324,7 @@ def review_create(request, pk):
             return redirect('product_detail', pk=order.id)
     else:
         form = ReviewForm()
-    return render(request, 'couponBank/product_detail.html')
+    return render(request, 'couponBank/product_detail.html', {'form': form})
 
 @login_required
 def review_delete(request, id, pk):
@@ -344,7 +344,7 @@ def review_edit(request, id, pk):
             return redirect('product_detail', pk=order.id)
     else:
         form = ReviewForm(instance=review)
-    return render(request, 'couponBank/review_form.html', {'form': form})
+    return render(request, 'couponBank/product_detail.html', {'form': form})
 
 def render_to_pdf(path: str, params: dict):
         template = get_template(path)
