@@ -6,11 +6,12 @@ footer {
 
 main{
     margin: 4em 10em;
-}
+}  
 
 #container{
     column-count: 4;
-    padding: 1em 0;
+    column-gap:  2em;
+    padding: 2em 0;
 }
 
 #prof_pic{
@@ -213,3 +214,27 @@ dd:before {
 .column{
     column-count: 5;
 }
+
+@media screen 
+    and (min-width : 375px) 
+    and (max-width : 1400px)
+    and (orientation : landscape){ 
+        #container{
+            column-count: 3;
+        }
+        main{
+            margin: 4em 5em;
+        }  
+    }
+
+@media screen 
+    and (min-width : 375px)
+    and (max-width : 1400px)
+    and (orientation : portrait){ 
+        #container{
+            column-count: 2;
+        }
+        main{
+            margin: 4em 5em;
+        }
+    }
