@@ -34,7 +34,7 @@ main{
 }
 
 #cd{
-    margin-bottom: 1.5em ;
+    margin-bottom: 2em ;
     -webkit-column-break-inside: avoid;
     -moz-column-break-inside:avoid;
     -moz-page-break-inside:avoid;

@@ -31,11 +31,14 @@ credentials = service_account.Credentials.from_service_account_info(service_acco
 client = vision.ImageAnnotatorClient(credentials=credentials)
 
 def homepage(request):
+    return render(request, 'couponBank/homepage.html')
+
+def store_page(request):
     products = Product.objects.all()
     paginator = Paginator(products,8)
     page = request.GET.get('page')
     products = paginator.get_page(page)
-    return render(request, 'couponBank/homepage.html',{'products': products })
+    return render(request, 'couponBank/store_page.html',{'products': products })
 
 @login_required
 def profile(request):
