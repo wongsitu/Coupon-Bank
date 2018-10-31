@@ -215,6 +215,12 @@ dd:before {
     column-count: 5;
 }
 
+#review_pic{
+    width: 80px;
+    height:auto;
+    border-radius: 200%;
+}
+
 @media screen 
     and (min-width : 375px) 
     and (max-width : 1400px)

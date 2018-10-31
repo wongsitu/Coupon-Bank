@@ -28,7 +28,7 @@
                 <p><strong>Order placed at:</strong> {{order.timestamp}}</p>
                 <p><strong>Total:</strong> $ {{order.amount}}</p>
                 <p><strong>Shipping to:</strong>
-                    <a data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom">
+                    <a data-toggle="tooltip" data-placement="bottom" title="{{order.profile.address}}">
                         {{order.profile}}
                     </a>
                 </p>
