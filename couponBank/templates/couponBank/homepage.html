@@ -42,7 +42,7 @@
                 <h5 class="card-title">{{product}}, ${{product.price}}</h5>
                 <p><strong>Posted by:</strong> {{product.user}}<p>
                 <p class="card-text">{{product.description|truncatechars:200}}</p>
-                <a href="{% url 'product_detail' pk=product.id %}" class="btn btn-primary">Details...</a>
+                <a href="{% url 'product_detail' pk=product.id %}" class="btn btn-info">Details...</a>
             </div>
         </div>
     {% endfor %}
