@@ -213,7 +213,13 @@ def product_detail(request,pk):
     if request.user.is_authenticated:
         form = ReviewForm(request.POST)
         currently_log = User.objects.get(id=request.user.id)
-        return render(request,'couponBank/product_detail.html', {'product': product,'reviews':reviews, 'currently_log':currently_log, 'form': form})
+        content = {
+            'product': product,
+            'reviews':reviews, 
+            'currently_log':currently_log, 
+            'form': form
+            }
+        return render(request,'couponBank/product_detail.html', content)
     return render(request,'couponBank/product_detail.html', {'product': product,'reviews':reviews})
     
 def generate_order_id():
