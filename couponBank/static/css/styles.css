@@ -5,13 +5,21 @@ footer {
 }
 
 main{
-    margin: 4em 10em;
+    margin: 6em 10em;
 }  
 
 #container{
     column-count: 4;
     column-gap:  2em;
     padding: 2em 0;
+}
+
+.coupon {
+    border: 3px dashed #bcbcbc;
+    border-radius: 10px;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+    margin: 2em 0;
 }
 
 #prof_pic{
