@@ -236,11 +236,11 @@ def add_to_cart(request,pk):
     name = product.brand
     if product.user == user:
         messages.info(request,"It's your own product")
-        return redirect('homepage')
+        return redirect('store_page')
     order = Order.objects.create(ref_code=generate_order_id(), buyer=user, is_ordered=False, products=product, date_ordered = timezone.datetime.now())
     order.save()
     messages.success(request,'Successfully added {} coupon to cart'.format(name))
-    return redirect('homepage')
+    return redirect('store_page')
 
 @login_required
 def delete_from_cart(request,pk):
