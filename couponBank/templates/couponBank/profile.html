@@ -6,9 +6,9 @@
         <div class="pict">
             <h5 style="text-align:center">{{user_profile.user.username}}</h5>
             {% if user_profile.profile_pic %}
-                <img id="prof_pic" src="{{ user_profile.profile_pic.url }}" alt="">  
+                <img id="prof_pic" src="{{ user_profile.profile_pic.url }}">  
             {% else %}
-                <img id="prof_pic" src="{%static 'images/not_available.png'%}" alt="">
+                <img id="prof_pic" src="{%static 'images/not_available.png'%}">
             {% endif %}
         </div>
         <div class="information">

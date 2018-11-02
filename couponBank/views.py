@@ -21,6 +21,8 @@ import os
 import random, string
 import json
 from xhtml2pdf import pisa
+from threading import Timer
+import random
 
 credentials_raw = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
 
@@ -30,8 +32,23 @@ credentials = service_account.Credentials.from_service_account_info(service_acco
 
 client = vision.ImageAnnotatorClient(credentials=credentials)
 
+x = timezone.datetime.now()
+y = x.replace(day=x.day+1, hour=1, minute=0, second=0, microsecond=0)
+delta_t=y-x
+
+secs=delta_t.seconds+1
+
+def dealOfDay(request):
+    deal = Product.objects.all().last()
+    return deal
+
+t = Timer(secs, dealOfDay)
+
+t.start()
+
 def homepage(request):
-    return render(request, 'couponBank/homepage.html')
+    deal = dealOfDay(request)
+    return render(request, 'couponBank/homepage.html',{'deal':deal })
 
 def store_page(request):
     products = Product.objects.all()
