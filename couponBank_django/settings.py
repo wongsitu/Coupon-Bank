@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django_countries',
     "djstripe",
     'storages',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
