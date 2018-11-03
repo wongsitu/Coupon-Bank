@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "djstripe",
     'storages',
     'django_celery_beat',
+    'star_ratings',
 ]
 
 MIDDLEWARE = [

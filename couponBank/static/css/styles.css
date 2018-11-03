@@ -5,7 +5,7 @@ footer {
 }
 
 main{
-    margin: 6em 10em;
+    margin: 5em 10em;
 }  
 
 #container{
@@ -19,7 +19,7 @@ main{
     border-radius: 10px;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300;
-    margin: 2em 0;
+    margin-bottom: 2em;
 }
 
 #prof_pic{
