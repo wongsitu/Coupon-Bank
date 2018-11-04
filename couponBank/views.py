@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -23,6 +24,7 @@ import json
 from xhtml2pdf import pisa
 from threading import Timer
 import random
+from celery import task
 
 credentials_raw = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
 
@@ -32,19 +34,10 @@ credentials = service_account.Credentials.from_service_account_info(service_acco
 
 client = vision.ImageAnnotatorClient(credentials=credentials)
 
-x = timezone.datetime.now()
-y = x.replace(day=x.day+1, hour=1, minute=0, second=0, microsecond=0)
-delta_t=y-x
-
-secs=delta_t.seconds+1
-
+@task
 def dealOfDay(request):
     deal = Product.objects.all().last()
     return deal
-
-t = Timer(secs, dealOfDay)
-
-t.start()
 
 def homepage(request):
     deal = dealOfDay(request)

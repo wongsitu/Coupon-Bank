@@ -2,6 +2,23 @@
 {% load staticfiles %}
 
 {% block content %}
+<h2><strong>How does it work?</strong></h2>
+<p>
+    Thanks to Google Cloud Vision API, we are able to extract the brand and description of the coupons and 
+    gift cards you upload here. It uses Convolutional Neural Networks which works by breaking down the image by
+    filters, these are just smaller groups pixels. By applying many filters, the CNN looks for specific patterns
+    of the image and does a series of calculations to recognize it. 
+</p>
+<p>
+    We decided to use this technology with the main focus of automizing tedious and boring tasks that most users have
+    to go though when trying to sell. Because the development of e-commerce is increasing, the user experience has to
+    improve too. 
+</p>
+<h2><strong>How do I start?</strong></h2>
+<p>
+    Just take a photo of the coupon or gift card you want to post, upload it in the form below and give it a price. Dont worry!
+    We will handle the work for you. If the system does not recognize your product, we will let you know.
+</p>
 <div class="form">
     <form  enctype="multipart/form-data" method="POST" class="ground">
         <h3>Post product:</h3>

@@ -1,6 +1,7 @@
 import os
 import django_heroku
-
+from celery.schedules import crontab
+from datetime import timedelta
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR,'couponBank/templates')
@@ -48,7 +49,6 @@ INSTALLED_APPS = [
     'django_countries',
     "djstripe",
     'storages',
-    'django_celery_beat',
     'star_ratings',
 ]
 
@@ -130,6 +130,20 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
+
+# CELERY STUFF
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Makassar'
+CELERY_BEAT_SCHEDULE = {
+    'task-number-one': {
+        'task': 'couponBank.views.dealOfDay',
+        'schedule': crontab(minute=59, hour=23)
+    },
+}
 
 STATICFILES_DIRS = [STATIC_DIR,]
 MEDIA_ROOT = MEDIA_DIR

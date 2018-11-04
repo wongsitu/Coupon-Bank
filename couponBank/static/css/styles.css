@@ -51,8 +51,9 @@ main{
 }
 
 .form{
-    margin: 12em;
     display: flex;
+    margin-top: 5em;
+    margin-bottom: 10em;
 }
 
 #thumbnail{
@@ -79,8 +80,8 @@ main{
 }
 
 #product-img{
-    width: 400px;
-    height: 150px;
+    width: 50%;
+    height: auto;
 }
 
 #empty-view{
