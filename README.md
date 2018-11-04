@@ -9,21 +9,28 @@ Here are some images of my application
 
 ![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/homepage.png)
 
-![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/coupon1.png)
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/store_page.png)
 
-![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/coupon2.png)
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/store_page2.png)
 
 ![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/aboutpage.png)
 
-![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/post_product.png)
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/create_product.png)
 
-![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/FAQ.png)
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/product_detail.png)
 
-![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/profilepage.png)
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/shoppingcart.png)
 
-![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/offers.png)
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/checkout.png)
 
-![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/invoice_receipt.png)
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/profile.png)
+
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/profile2.png)
+
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/profile3.png)
+
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/profile4.png)
+
 
 ## Features
 
