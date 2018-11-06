@@ -1,7 +1,7 @@
 {% extends "couponBank/base.html" %}
 {% block content %}
 <h1>Welcome to our Store!</h1>
-<ul class="pagination pagination-md justify-content-center">
+<ul class="pagination pagination-lg justify-content-center">
     {% if products.has_previous %}
         <li class="page-item">
             <a class="page-link" href="?page={{products.previous_page_number}}" aria-label="Previous">
@@ -47,7 +47,7 @@
         </div>
     {% endfor %}
 </div>
-<ul class="pagination justify-content-center">
+<ul class="pagination pagination-lg justify-content-center">
     {% if products.has_previous %}
         <li class="page-item">
             <a class="page-link" href="?page={{products.previous_page_number}}" aria-label="Previous">
