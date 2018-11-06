@@ -23,13 +23,14 @@ main{
 }
 
 .banner div img {
-    width: 20em;
+    width: 15em;
     height: auto;
 }
 
 .banner{
     display:flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 
 .banner div{
