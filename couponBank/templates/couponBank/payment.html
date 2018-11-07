@@ -1,24 +1,36 @@
 {% extends 'couponBank/base.html' %}
 
 {% block content %}
-<div class="card w-50">
-    <h5 class="card-header" style="text-align: center">Order Summary</h5>
-    <div class="card-body">
-        <h5 class="card-title">Products:</h5>
-        {% for order in orders%}
-            <p class="card-text">{{order.products}} $ {{order.products.price}}</p>
-        {% endfor %}
+<div class="card w-50 text-center mx-auto spacing">
+    <div class="card-header" id="space">
+        <p><strong>Order Summary</strong></p>
+        <p><strong>Total Price: $ {{pricing}}</strong></p>
     </div>
-    <form action="/checkout" method="POST">
-        {% csrf_token %}
-        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key="{{stripe_key}}"
-            data-amount="{{Total_price}}"
-            data-name="Coupon Bank"
-            data-description="Your Product"
-            data-currency="usd">
-        </script>
-    </form>
+    <div class="card-body" id="flex-on-my-ex">
+        <div>
+            {% for product in orders %}
+            <div class="alignment">
+                <div>
+                    <img src="{{product.products.picture.url}}" id="image">
+                </div>
+                <div class="image-text">
+                    <p class="card-text">{{product}} ${{product.products.price}}</p>
+                    <p class="card-text"> Sold by: {{product.products.user}}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>
+<form action="/checkout" method="POST" class="text-center">
+    {% csrf_token %}
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+        data-key="{{stripe_key}}"
+        data-amount="{{Total_price}}"
+        data-name="Coupon Bank"
+        data-description="Your Product"
+        data-currency="usd">
+    </script>
+</form>
 
 {% endblock %}

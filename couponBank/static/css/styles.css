@@ -25,6 +25,7 @@ main{
 .banner div img {
     width: 15em;
     height: auto;
+    margin: auto;
 }
 
 .banner{

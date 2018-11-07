@@ -271,11 +271,13 @@ def payment(request):
     Total_price = []
     for obj in orders.filter().all():
         Total_price.append(obj.products.price)
+    pricing = sum(Total_price)
     Total_price = sum(Total_price*100)
     content = { 
         "stripe_key": settings.STRIPE_TEST_PUBLIC_KEY, 
         "orders":orders, 
-        "Total_price":Total_price 
+        "Total_price":Total_price,
+        "pricing":pricing 
         }
     return render(request, "couponBank/payment.html", content)
 
