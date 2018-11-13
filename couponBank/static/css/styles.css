@@ -76,6 +76,11 @@ main{
     width: 100%;
 }
 
+.featured{
+    width: 200px;
+    margin: 1em;
+}
+
 .single-view{
     margin: 2em;
     display:grid;
@@ -124,6 +129,10 @@ main{
     margin: 1em;
 }
 
+.featured-alignment{
+    display:flex;
+    flex-direction: row;
+}
 
 #image{
     width: 200px;

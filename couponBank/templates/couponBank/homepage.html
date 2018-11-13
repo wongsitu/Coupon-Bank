@@ -1,4 +1,5 @@
 {% extends 'couponBank/base.html' %}
+{% load staticfiles %}
 {% block content %}
 
 <div class="coupon">
@@ -22,11 +23,22 @@
     <div class="col-sm-8">
         <div class="card">
             <h5 class="card-header bg-warning text-center text-white">Featured Deals</h5>
+            {% for product in random_items%}
             <div class="card-body">
-                <h5 class="card-title">Under Construction</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <button href="#" class="btn btn-primary">Go somewhere</button>
+                <div class="featured-alignment">
+                    <div>
+                        <img class="featured" src="{{ product.picture.url }}">
+                    </div>
+                    <div>
+                        <h5 class="card-title">{{product.brand}}</h5>
+                        <p lass="card-text">Posted by: {{product.user}}</p>
+                        <p class="card-text">{{ product.description|truncatechars:400 }}</p>
+                        <a href="{% url 'product_detail' pk=product.id %}" class="btn btn-warning">View product</a>
+                    </div>
+                </div>
             </div>
+            <hr/>
+            {% endfor%}
         </div>
     </div>
     <div class="col-sm-4">

@@ -41,7 +41,12 @@ def dealOfDay(request):
 
 def homepage(request):
     deal = dealOfDay(request)
-    return render(request, 'couponBank/homepage.html',{'deal':deal })
+    random_items = random.sample(list(Product.objects.all()), k=5)
+    content ={
+        'random_items': random_items,
+        'deal':deal
+    }
+    return render(request, 'couponBank/homepage.html', content)
 
 def store_page(request):
     products = Product.objects.all()
