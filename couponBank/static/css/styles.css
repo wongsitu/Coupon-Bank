@@ -31,7 +31,7 @@ main{
 .banner{
     display:flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .banner div{
@@ -147,6 +147,10 @@ main{
     margin: 40px auto;
     border-radius: 5px;
     
+}
+
+.login{
+    margin: 10em auto;
 }
 
 .hide {

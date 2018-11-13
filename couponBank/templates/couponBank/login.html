@@ -1,12 +1,22 @@
 {% extends "couponBank/base.html" %}
 
 {% block content %}
-    <form class="form" method="post" action="{% url 'user_login' %}">
-        {% csrf_token %}
-        <label for="username">Username:</label>
-        <input type="text" name="username" placeholder="Username">
-        <label for="password">Password:</label>
-        <input type="password" name="password" placeholder="Password">
-        <input type="submit" name="" class="btn btn-primary" value="Login">
-    </form>
+<div class="card w-50 login">
+    <div class="card-body">
+        <h2 class="text-center">Sign in</h2>
+        <form method="post" action="{% url 'user_login' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" name="username" id="username" placeholder="Example input">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Another input">
+            </div>
+            <input type="submit" name="" class="btn btn-primary" value="Login">
+        </form>
+    </div>
+</div>
+
 {% endblock %}

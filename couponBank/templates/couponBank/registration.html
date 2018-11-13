@@ -1,9 +1,25 @@
 {% extends "couponBank/base.html" %}
 
 {% block content %}
-    <form enctype="multipart/form-data" method="POST" >
-        {% csrf_token %}
-        {{ user_form.as_p }}
-        <input type="submit" class="btn btn-primary" name="" value="Register">
-    </form>
+    <div class="card w-50 login">
+        <div class="card-body">
+            <h2 class="text-center">Register</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <div>{{ user_form.username}}</div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <div>{{ user_form.password }}</div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <div>{{ user_form.email }}</div>
+                </div>
+                <input type="submit" class="btn btn-primary" name="" value="Register">
+            </form>
+        </div>
+    </div>
 {% endblock %}
