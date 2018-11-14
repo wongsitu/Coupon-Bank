@@ -10,6 +10,8 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.template.loader import get_template
 from django.conf import settings
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
 from couponBank.forms import UserForm, UserProfileForm, ProductForm, ReviewForm
 from .models import User, UserProfile, Product, Order, Transaction, Reviews
 from google.oauth2 import service_account
@@ -244,18 +246,21 @@ def generate_order_id():
     date_str = str(timezone.datetime.now())
     return date_str
 
-@login_required
 def add_to_cart(request,pk):
-    user = User.objects.get(id=request.user.id)
-    product = Product.objects.get(id=pk)
-    name = product.brand
-    if product.user == user:
-        messages.info(request,"It's your own product")
-        return redirect('store_page')
-    order = Order.objects.create(ref_code=generate_order_id(), buyer=user, is_ordered=False, products=product, date_ordered = timezone.datetime.now())
-    order.save()
-    messages.success(request,'Successfully added {} coupon to cart'.format(name))
-    return redirect('store_page')
+    if not request.user.is_anonymous:
+        user = User.objects.get(id=request.user.id)
+        product = Product.objects.get(id=pk)
+        name = product.brand
+        if product.user == user:
+            messages.info(request,"It's your own product")
+            return redirect('store_page')
+        order = Order.objects.create(ref_code=generate_order_id(), buyer=user, is_ordered=False, products=product, date_ordered = timezone.datetime.now())
+        order.save()
+        messages.success(request,'Successfully added {} coupon to cart'.format(name))
+        return redirect(request.META['HTTP_REFERER'])
+    else:
+        messages.info(request,"Please register or login to add to add this product")
+        return redirect(request.META['HTTP_REFERER'])
 
 @login_required
 def delete_from_cart(request,pk):
