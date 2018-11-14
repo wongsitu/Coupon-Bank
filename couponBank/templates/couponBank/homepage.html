@@ -2,11 +2,12 @@
 {% load staticfiles %}
 {% block content %}
 
+<div id="scissor"><img src="https://i.imgur.com/PRgxt.png"></div>
 <div class="coupon">
-    <h2 class="display-4 text-center">Deal of the day</h2>
+    <img id="dayDeal" src="{%static 'images/deal_of_the_day.png' %}">
     <div class="banner">
         <div>
-            <img class="dayDeal" src="{{ deal.picture.url }}">
+            <img src="{{ deal.picture.url }}">
         </div>
         <div>
             <h3>{{ deal.brand }} Coupon</h3>
@@ -80,7 +81,7 @@
                 <div class="alignment">
                     <div class="space">
                         <h5 class="text-warning"> Join our community!</h5>
-                        <p>Coupon Bank is a e-commerce website designed for users to buy and sell 'long tail coupons'. Ever got some extra coupons and don't know what to do with them? Sell them here! It's very easy to get started, you can start by registering <a href="#">here</a>.</p>
+                        <p>Coupon Bank is a e-commerce website designed for users to buy and sell 'long tail coupons'. Ever got some extra coupons and don't know what to do with them? Sell them here! It's very easy to get started, you can start by registering <a href="{% url 'register' %}">here</a>.</p>
                     </div>
                     <img class="how-works" src="{% static 'images/ecommerce-home.png' %}">
                 </div>
@@ -88,13 +89,13 @@
                     <img class="how-works" src="{% static 'images/ecom-banner.png' %}">
                     <div class="space">
                         <h5 class="text-warning"> Start trading with other users</h5>
-                        <p>If you got a coupon to sell, feel free to upload and post a picture of it, our technology will recognize the brand and description. If you want to buy a coupon, add it to your shopping cart and check out with a debit/credit card. Check out our products in our <a href="#">store page</a>.</p>
+                        <p>If you got a coupon to sell, feel free to upload and post a picture of it, our technology will recognize the brand and description. If you want to buy a coupon, add it to your shopping cart and check out with a debit/credit card. Check out our products in our <a href="{% url 'store_page' %}">store page</a>.</p>
                     </div>
                 </div>
                 <div class="alignment">
                     <div class="space">
                         <h5 class="text-warning"> We will take take of the rest</h5>
-                        <p>Coupon Bank aims to automize the e-commerce industry, and with the help of Google Cloud Services, Stripe payment system and AWS storage, we are able to do that. You don't need to worry about the delivery system, we'll take care of it. For more information, you can visit our <a href="#">about page</a>.</p>
+                        <p>Coupon Bank aims to automize the e-commerce industry, and with the help of Google Cloud Services, Stripe payment system and AWS storage, we are able to do that. You don't need to worry about the delivery system, we'll take care of it. For more information, you can visit our <a href="{% url 'FAQ' %}">about page</a>.</p>
                     </div>
                     <img class="how-works" src="{% static 'images/ecommerce-how-works.png' %}">
                 </div>

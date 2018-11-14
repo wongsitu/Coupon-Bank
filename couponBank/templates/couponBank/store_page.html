@@ -35,13 +35,18 @@
     {% endif%}
 </ul>
 <div id="container">
-    {% for product in products %}
+    {% for product in products.object_list %}
         <div class="card" id="cd">
             <img class="card-img-top" src="{{product.picture.url}}">
             <div class="card-body">
-                <h5 class="card-title">{{product}} ${{product.price}}</h5>
+                <h5 class="card-title">{{product}} <span class="text-success"><strong>${{product.price}}</strong></span></h5>
                 <p><strong>Posted by:</strong> {{product.user}}<p>
                 <p class="card-text">{{product.description|truncatechars:200}}</p>
+                {% if product.reviews.all|length > 0%}
+                    <p><i class="fas fa-comments"></i> {{product.reviews.all|length}} Comments</p>
+                {% else%}
+                    <p><i class="fas fa-comments"></i> No comments</p>
+                {% endif %}
                 <a href="{% url 'product_detail' pk=product.id %}" class="btn btn-info">Details...</a>
             </div>
         </div>

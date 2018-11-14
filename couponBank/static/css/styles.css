@@ -14,12 +14,24 @@ main{
     padding: 2em 0;
 }
 
+#dayDeal{
+    width: 15em;
+    display:block;
+    margin:auto;
+}
+
 .coupon {
     border: 3px dashed #bcbcbc;
     border-radius: 10px;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300;
     margin-bottom: 2em;
+}
+
+#scissor {
+	width: 300px;
+	height: 46px;
+	margin: 0 auto;
 }
 
 .banner div img {

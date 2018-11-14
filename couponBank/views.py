@@ -55,6 +55,10 @@ def store_page(request):
     paginator = Paginator(products,8)
     page = request.GET.get('page')
     products = paginator.get_page(page)
+    print("@@@@@@@@@@@@@")
+    print(products.paginator)
+    print("-------")
+    print(products.object_list)
     return render(request, 'couponBank/store_page.html',{'products': products })
 
 @login_required
