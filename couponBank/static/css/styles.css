@@ -115,7 +115,16 @@ main{
 }
 
 .spacing{
-    margin-bottom: 1em;
+    margin-bottom: 2em;
+}
+
+.how-works{
+    width: 50%;
+    height: 50%;
+}
+
+.space{
+    margin: 1em;
 }
 
 #space{
