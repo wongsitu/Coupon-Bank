@@ -4,6 +4,16 @@ footer {
     width: 100%;
 }
 
+.dropdown:hover>.dropdown-menu {
+    display: block;
+}
+
+h2,h3,h4,h5{
+    font-family: 'seravek', sans-serif;
+    font-weight: bold;
+    font-style: normal;
+}
+
 hr{
     padding:0;
     margin: 0;

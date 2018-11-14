@@ -11,11 +11,11 @@
         </div>
         <div>
             <h3>{{ deal.brand }} Coupon</h3>
-            <h6><strong>Posted by:</strong> {{deal.user}} </h6>
+            <p><strong>Posted by:</strong> {{deal.user}}</p>
             <p>{{ deal.description|truncatechars:700}}</p>
             <div class="banner">
                 <h3 class="text-success">Price: $ {{ deal.price }}</h3>
-                <a href="{% url 'product_detail' pk=deal.id %}" class="btn btn-warning">Save Now!</a>
+                <a href="{% url 'product_detail' pk=deal.id %}" class="btn btn-warning"><i class="fas fa-piggy-bank"></i> <strong>Save Now!</strong></a>
             </div>
         </div>
     </div>
@@ -31,11 +31,11 @@
                         <img class="featured" src="{{ product.picture.url }}">
                     </div>
                     <div>
-                        <h5 class="card-title">{{product.brand}}</h5>
-                        <p lass="card-text">Posted by: {{product.user}} | Price: $ {{product.price}}</p>
+                        <h5 class="card-title"><strong>{{product.brand}}</strong></h5>
+                        <p lass="card-text"><strong>Posted by:</strong> {{product.user}} | <strong>Price:</strong> <span class="text-success"><strong>$ {{product.price}}</strong></span></p>
                         <p class="card-text">{{ product.description|truncatechars:200 }}</p>
                         <a href="{% url 'product_detail' pk=product.id %}" class="btn btn-warning">View product</a>
-                        <a href="{% url 'add_to_cart' pk=product.id %}" class="btn btn-primary">Add to cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                        <a href="{% url 'add_to_cart' pk=product.id %}" class="btn mdb-color">Add to cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@
     </div>
     <div class="col-sm-6">
         <div class="card spacing">
-            <h5 class="card-header bg-warning text-center text-white">Top deals for you</h5>
+            <h5 class="card-header bg-warning text-center text-white">Trending now</h5>
             <div>
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
@@ -72,6 +72,29 @@
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
+                </div>
+            </div>
+        </div>
+        <div class="featured-alignment">
+            <div class="card border-warning mb-3" style="margin-right:1em">
+                <div class="card-header">Header</div>
+                <div class="card-body text-warning">
+                    <h5 class="card-title">Warning card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+            <div class="card border-warning mb-3">
+                <div class="card-header">Header</div>
+                <div class="card-body text-warning">
+                    <h5 class="card-title">Warning card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+            <div class="card border-warning mb-3" style="margin-left:1em">
+                <div class="card-header">Header</div>
+                <div class="card-body text-warning">
+                    <h5 class="card-title">Warning card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 </div>
             </div>
         </div>
