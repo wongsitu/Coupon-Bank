@@ -4,6 +4,11 @@ footer {
     width: 100%;
 }
 
+hr{
+    padding:0;
+    margin: 0;
+}
+
 main{
     margin: 5em 10em;
 }  
@@ -133,6 +138,7 @@ main{
 .how-works{
     width: 50%;
     height: 50%;
+    padding: auto;
 }
 
 .space{
@@ -147,7 +153,10 @@ main{
 .alignment{
     display:flex;
     flex-direction: row;
-    margin: 1em;
+    -ms-flex-align: center;
+	-webkit-align-items: center;
+	-webkit-box-align: center;
+	align-items: center;
 }
 
 .featured-alignment{
