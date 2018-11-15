@@ -14,7 +14,7 @@ h2,h3,h4,h5{
     font-style: normal;
 }
 
-hr{
+.no-space{
     padding:0;
     margin: 0;
 }
@@ -308,7 +308,7 @@ dd:before {
         }
         main{
             margin: 4em 5em;
-        }  
+        }
     }
 
 @media screen 
