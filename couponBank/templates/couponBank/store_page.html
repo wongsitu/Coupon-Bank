@@ -14,13 +14,13 @@
         {% if products.number == num %}
         <li class="page-item active">
             <a class="page-link">
-                {{num}}
+                <h6>{{num}}</h6>
             </a>
         </li>
         {% elif num > products.number|add:'-3' and num < products.number|add:'3' %}
         <li class="page-item">
             <a class="page-link" href="?page={{num}}">
-                {{num}}
+                <h6>{{num}}</h6>
             </a>
         </li>
         {% endif%}
