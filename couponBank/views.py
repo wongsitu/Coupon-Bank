@@ -36,6 +36,11 @@ credentials = service_account.Credentials.from_service_account_info(service_acco
 
 client = vision.ImageAnnotatorClient(credentials=credentials)
 
+def global_settings(request):
+    return {
+        'GOOGLE_TRACKING_ID': settings.GOOGLE_TRACKING_ID
+    }
+
 @task
 def dealOfDay(request):
     deal = Product.objects.all().last()
