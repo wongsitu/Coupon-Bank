@@ -1,7 +1,7 @@
 {% extends "couponBank/base.html" %}
 
 {% block content %}
-    <h1>Found {{ searched_products|length }} result(s)</h1>
+    <h2>Found {{ searched_products|length }} result(s)</h2>
     <div id="container">
         {% for product in searched_products %}
             <div class="card" style="width: 18rem;" id="cd">

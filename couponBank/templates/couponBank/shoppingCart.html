@@ -1,7 +1,7 @@
 {% extends "couponBank/base.html" %}
 {% load staticfiles %}
 {% block content %}
-    <h1>Shopping Cart</h1>
+    <h2>Shopping Cart</h2>
     {% if cart_orders|length == 0 %}
         <div id="empty-view">
             <img id="empty-logo" src="{%static 'images/shoppingCart.png'%}">
