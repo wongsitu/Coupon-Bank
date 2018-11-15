@@ -4,26 +4,40 @@ Coupon Bank is a peer-to-peer lending aplication that allows users to buy and se
 
 Link: https://Coupon Bank.herokuapp.com/
 
-## Images
+## Image Gallery
 Here are some images of my application
 
-![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/homepage.png)
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/homepage1.png)
 
-![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/store_page.png)
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/homepage2.png)
+
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/homepage3.png)
+
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/store_page1.png)
 
 ![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/store_page2.png)
 
-![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/aboutpage.png)
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/store_page3.png)
 
-![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/create_product.png)
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/search_page.png)
+
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/about_page.png)
+
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/about_page2.png)
+
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/FAQ.png)
+
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/create_post.png)
 
 ![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/product_detail.png)
 
-![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/shoppingcart.png)
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/shopping_cart1.png)
 
-![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/checkout.png)
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/shopping_cart2.png)
 
-![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/profile.png)
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/check_out.png)
+
+![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/profile1.png)
 
 ![Alt text](https://github.com/wongsitu/Coupon-Bank/blob/master/assets/profile2.png)
 
