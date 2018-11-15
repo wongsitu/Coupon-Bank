@@ -5,7 +5,7 @@
     {% if products.has_previous %}
         <li class="page-item">
             <a class="page-link" href="?page={{products.previous_page_number}}" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
+                <span aria-hidden="true"><h6>&laquo;</h6></span>
                 <span class="sr-only">Previous</span>
             </a>
         </li>
@@ -28,7 +28,7 @@
     {% if products.has_next %}
         <li class="page-item">
             <a class="page-link" href="?page={{products.next_page_number}}" aria-label="Previous">
-                <span aria-hidden="true">&raquo;</span>
+                <span aria-hidden="true"><h6>&raquo;</h6></span>
                 <span class="sr-only">Next</span>
             </a>
         </li>
@@ -56,7 +56,7 @@
     {% if products.has_previous %}
         <li class="page-item">
             <a class="page-link" href="?page={{products.previous_page_number}}" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
+                <span aria-hidden="true"><h6>&laquo;</h6></span>
                 <span class="sr-only">Previous</span>
             </a>
         </li>
@@ -65,13 +65,13 @@
         {% if products.number == num %}
         <li class="page-item active">
             <a class="page-link">
-                    {{num}}
+                <h6>{{num}}</h6>
             </a>
         </li>
         {% elif num > products.number|add:'-3' and num < products.number|add:'3' %}
         <li class="page-item">
             <a class="page-link" href="?page={{num}}">
-                {{num}}
+                <h6>{{num}}</h6>
             </a>
         </li>
         {% endif%}
@@ -79,7 +79,7 @@
     {% if products.has_next %}
         <li class="page-item">
             <a class="page-link" href="?page={{products.next_page_number}}" aria-label="Previous">
-                <span aria-hidden="true">&raquo;</span>
+                <span aria-hidden="true"><h6>&raquo;</h6></span>
                 <span class="sr-only">Next</span>
             </a>
         </li>
