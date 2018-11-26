@@ -107,6 +107,9 @@ def about(request):
 def FAQ(request):
     return render(request, 'couponBank/FAQ.html')
 
+def coupon_bank_eats(request):
+    return render(request, 'couponBank/coupon_bank_eats.html')
+
 @login_required
 def shoppingCart(request):
     user = User.objects.get(id=request.user.id)
