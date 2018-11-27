@@ -109,12 +109,16 @@ def FAQ(request):
     return render(request, 'couponBank/FAQ.html')
 
 def coupon_bank_eats(request):
+    return render(request, 'couponBank/coupon_bank_eats.html')
+
+def coupon_bank_eats_type(request,food):
     headers = {"Authorization" : "Bearer " + settings.YELP_API_KEY}
-    response = requests.get("https://api.yelp.com/v3/businesses/WavvLdfdP6g8aZTtbBQHTw",headers=headers)
+    response = requests.get("https://api.yelp.com/v3/businesses/search?categories={}&location=San+Francisco".format(food),headers=headers)
     content = {
         'response': response
     }
-    return render(request, 'couponBank/coupon_bank_eats.html',content)
+    print(response.json())
+    return render(request, 'couponBank/coupon_bank_eats_type.html',content)
 
 @login_required
 def shoppingCart(request):

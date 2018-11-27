@@ -9,6 +9,7 @@ urlpatterns = [
     path('about', views.about, name='about'),
     path('FAQ', views.FAQ, name='FAQ'),
     path('coupon_bank_eats', views.coupon_bank_eats, name='coupon_bank_eats'),
+    path('coupon_bank_eats/<str:food>', views.coupon_bank_eats_type, name='coupon_bank_eats_type'),
     path('register', views.register, name='register'),
     path('login', views.user_login, name="user_login"),
     path('logout', views.user_logout, name='logout'),
