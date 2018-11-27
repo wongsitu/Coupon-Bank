@@ -15,6 +15,8 @@ MEDIA_DIR = os.path.join(BASE_DIR,'couponBank/media')
 SECRET_KEY = os.environ['SECRET_KEY']
 STRIPE_LIVE_SECRET_KEY = os.environ['STRIPE_LIVE_SECRET_KEY']
 GOOGLE_TRACKING_ID = os.environ['GOOGLE_TRACKING_ID']
+YELP_API_KEY = os.environ['YELP_API_KEY']
+YELP_CLIENT_ID = os.environ['YELP_CLIENT_ID']
 
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")

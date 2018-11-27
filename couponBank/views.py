@@ -27,6 +27,7 @@ from xhtml2pdf import pisa
 from threading import Timer
 import random
 from celery import task
+import requests
 
 credentials_raw = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
 
@@ -108,7 +109,12 @@ def FAQ(request):
     return render(request, 'couponBank/FAQ.html')
 
 def coupon_bank_eats(request):
-    return render(request, 'couponBank/coupon_bank_eats.html')
+    headers = {"Authorization" : "Bearer " + settings.YELP_API_KEY}
+    response = requests.get("https://api.yelp.com/v3/businesses/WavvLdfdP6g8aZTtbBQHTw",headers=headers)
+    content = {
+        'response': response
+    }
+    return render(request, 'couponBank/coupon_bank_eats.html',content)
 
 @login_required
 def shoppingCart(request):
