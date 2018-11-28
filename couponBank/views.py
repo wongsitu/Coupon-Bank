@@ -109,7 +109,16 @@ def FAQ(request):
     return render(request, 'couponBank/FAQ.html')
 
 def coupon_bank_eats(request):
-    return render(request, 'couponBank/coupon_bank_eats.html')
+    headers = {"Authorization" : "Bearer " + settings.YELP_API_KEY}
+    fine_dining = requests.get("https://api.yelp.com/v3/businesses/search?price=4&location=San+Francisco&limit=4",headers=headers)
+    cheap_alt = requests.get("https://api.yelp.com/v3/businesses/search?price=1,2&location=San+Francisco&limit=4",headers=headers)
+    business = requests.get("https://api.yelp.com/v3/businesses/search?find_desc=business+lunch&location=San+Francisco&limit=4",headers=headers)
+    content = {
+        'fine_dining':fine_dining,
+        'cheap_alt': cheap_alt,
+        'business':business,
+    }
+    return render(request, 'couponBank/coupon_bank_eats.html',content)
 
 def coupon_bank_eats_type(request,food):
     headers = {"Authorization" : "Bearer " + settings.YELP_API_KEY}

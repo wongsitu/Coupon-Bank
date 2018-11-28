@@ -200,7 +200,6 @@ main{
     padding: 20px;
     margin: 40px auto;
     border-radius: 5px;
-    
 }
 
 .login{
@@ -302,6 +301,10 @@ dd:before {
     width: 80px;
     height:auto;
     border-radius: 200%;
+}
+
+.icons{
+    width: 8rem;
 }
 
 @media screen 
