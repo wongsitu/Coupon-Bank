@@ -91,7 +91,8 @@
                 <div class="card-body">
                     <h4 class="card-title">{{restaurant.name}}</h4>
                     <p>Price Range: {{restaurant.price}}</p>
-                    <p class="card-text">{{restaurant.location.display_address|join:" "}}</p>
+                    <p class="card-text">Address: {{restaurant.location.display_address|join:" "}}</p>
+                    <p class="card-text">Phone: {{restaurant.display_phone}}</p>
                     <a class="btn btn-warning">View more</a>
                 </div>
             </div>
@@ -108,6 +109,7 @@
                     <h4 class="card-title">{{rest.name}}</h4>
                     <p>Price Range: {{rest.price}}</p>
                     <p class="card-text">{{rest.location.display_address|join:" "}}</p>
+                    <p class="card-text">Phone: {{rest.display_phone}}</p>
                     <a class="btn btn-warning">View more</a>
                 </div>
             </div>
@@ -124,6 +126,7 @@
                     <h4 class="card-title">{{rest.name}}</h4>
                     <p>Price Range: {{rest.price}}</p>
                     <p class="card-text">{{rest.location.display_address|join:" "}}</p>
+                    <p class="card-text">Phone: {{rest.display_phone}}</p>
                     <a class="btn btn-warning">View more</a>
                 </div>
             </div>
