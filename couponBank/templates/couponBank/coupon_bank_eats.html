@@ -83,20 +83,49 @@
     </div>
 </div>
 <h3 class="text-center">Fine dining</h3>
-<div>
-
-</div>
-<h3 class="text-center">Romantic restaurants</h3>
-<div>
-    
-</div>
-<h3 class="text-center">Bussiness lunch</h3>
-<div>
-    
+<div class="d-flex">
+    {% for restaurant in fine_dining.json.businesses %}
+        <div class="col-md-3">
+            <div class="card mb-2">
+                <img class="card-img-top" src="{{restaurant.image_url}}" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">{{restaurant.name}}</h4>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a class="btn btn-warning">View more</a>
+                </div>
+            </div>
+        </div>
+    {% endfor%}
 </div>
 <h3 class="text-center">Cheap alternatives</h3>
-<div>
-    
+<div class="d-flex">
+    {% for rest in cheap_alt.json.businesses %}
+        <div class="col-md-3">
+            <div class="card mb-2">
+                <img class="card-img-top" src="{{rest.image_url}}" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">{{rest.name}}</h4>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a class="btn btn-warning">View more</a>
+                </div>
+            </div>
+        </div>
+    {% endfor%}
+</div>
+<h3 class="text-center">Bussiness lunch</h3>
+<div class="d-flex">
+    {% for rest in business.json.businesses %}
+        <div class="col-md-3">
+            <div class="card mb-2">
+                <img class="card-img-top" src="{{rest.image_url}}" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">{{rest.name}}</h4>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a class="btn btn-warning">View more</a>
+                </div>
+            </div>
+        </div>
+    {% endfor%}
 </div>
 
 {% endblock %}
