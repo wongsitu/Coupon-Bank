@@ -307,6 +307,10 @@ dd:before {
     width: 8rem;
 }
 
+#imgcard{
+    height: 15em;
+}
+
 @media screen 
     and (min-width : 375px) 
     and (max-width : 1400px)
