@@ -61,29 +61,29 @@
                             <a class="nav-link" href="{% url 'FAQ' %}"> <i class="fas fa-question-circle"></i> FAQ</a>
                         </li>
                         {% if request.user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'create_product' %}"> <i class="fas fa-hand-holding-usd"></i> New Offer</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-user" aria-hidden="true"></i> {{request.user}}
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{% url 'profile' %}">My profile <i class="fa fa-user" aria-hidden="true"></i></a>
-                                <a class="dropdown-item" href="{% url 'shoppingCart' %}">Shopping Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
-                                <a class="dropdown-item" href="{% url 'logout' %}">Logout <i class="fas fa-sign-out-alt"></i></a>
-                            </div>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'create_product' %}"> <i class="fas fa-hand-holding-usd"></i> New Offer</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-user" aria-hidden="true"></i> {{request.user}}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{% url 'profile' %}">My profile <i class="fa fa-user" aria-hidden="true"></i></a>
+                                    <a class="dropdown-item" href="{% url 'shoppingCart' %}">Shopping Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                                    <a class="dropdown-item" href="{% url 'logout' %}">Logout <i class="fas fa-sign-out-alt"></i></a>
+                                </div>
+                            </li>
                         {% else %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{% url 'register' %}">Register <i class="fas fa-registered"></i></a>
-                                <a class="dropdown-item" href="{% url 'user_login' %}">Login <i class="fas fa-sign-in-alt"></i></a>
-                            </div>
-                        </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{% url 'register' %}">Register <i class="fas fa-registered"></i></a>
+                                    <a class="dropdown-item" href="{% url 'user_login' %}">Login <i class="fas fa-sign-in-alt"></i></a>
+                                </div>
+                            </li>
                         {% endif %}
                     </ul>
                     <form method="GET" action="{% url 'search' %}" class="form-inline my-2 my-lg-0">
