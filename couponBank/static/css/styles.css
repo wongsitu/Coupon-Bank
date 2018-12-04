@@ -312,10 +312,14 @@ dd:before {
 }
 
 #map{
-    background: transparent url(/couponBank/static/images/loading.gif) no-repeat center center;
-    width:600px;
-    height:600px;
-    margin-top: 3em;
+    width:700px; 
+    height:600px; 
+    top:-550px;
+}
+
+.map-cont{
+    width:700px; 
+    height:500px;
 }
 
 #options{

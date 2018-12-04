@@ -2,10 +2,14 @@
 {% load staticfiles %}
 {% block content %}
 <script src="{% static 'scripts/map.js' %}" defer></script>
+
 <h3 class="text-center">{{food}}</h3>
 <div class="featured-alignment" style="align-content: center; justify-content: center;margin: auto;">
-    <div id="map">
-        <!-- Map goes here -->
+    <div class="map-cont">
+        <img src="{% static 'images/loading.gif' %}" />
+        <div id="map">
+            <!-- Map goes here -->
+        </div>
     </div>
     <div>
         <div class="card" id="options">
