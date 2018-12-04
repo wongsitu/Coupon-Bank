@@ -311,6 +311,12 @@ dd:before {
     height: 15em;
 }
 
+#map{
+    width:500px;
+    height:500px;
+    margin-top: 3em;
+}
+
 @media screen 
     and (min-width : 375px) 
     and (max-width : 1400px)

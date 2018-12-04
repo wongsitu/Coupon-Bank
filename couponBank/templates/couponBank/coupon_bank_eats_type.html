@@ -2,6 +2,20 @@
 {% load staticfiles %}
 {% block content %}
 
-<h2>Under construction</h2>
+<div class="featured-alignment">
+    <div id="map">
+        <!-- Map goes here -->
+    </div>
+    <div>
+        <div class="card" style="width: 18rem;">
+            <ul class="list-group list-group-flush" style="overflow:auto">
+                {% for restaurant in response.json.businesses %}
+                    <li class="list-group-item">{{restaurant.name}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
 
 {% endblock %}
