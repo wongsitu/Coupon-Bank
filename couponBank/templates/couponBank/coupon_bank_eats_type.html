@@ -1,16 +1,27 @@
 {% extends "couponBank/base.html" %}
 {% load staticfiles %}
 {% block content %}
-
-<div class="featured-alignment">
+<script src="{% static 'scripts/map.js' %}" defer></script>
+<h3 class="text-center">{{food}}</h3>
+<div class="featured-alignment" style="align-content: center; justify-content: center;margin: auto;">
     <div id="map">
         <!-- Map goes here -->
     </div>
     <div>
-        <div class="card" style="width: 18rem;">
+        <div class="card" id="options">
             <ul class="list-group list-group-flush" style="overflow:auto">
                 {% for restaurant in response.json.businesses %}
-                    <li class="list-group-item">{{restaurant.name}}</li>
+                    <li class="list-group-item">
+                        <div id="space">
+                            <div>
+                                <h6>{{restaurant.name}}</h6>
+                                <p>{{restaurant.location.display_address|join:" "}}</p>
+                                <p>{{restaurant.display_phone}}</p>
+                                <p><a href="{{restaurant.url}}">Visit page</a></p>
+                            </div>
+                            <img src="{{restaurant.image_url}}" style="width:150px; height:120px">
+                        </div>
+                    </li>
                 {% endfor %}
             </ul>
         </div>

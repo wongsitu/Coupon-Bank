@@ -126,6 +126,7 @@ def coupon_bank_eats_type(request,food):
     response = requests.get("https://api.yelp.com/v3/businesses/search?categories={}&location=San+Francisco".format(food),headers=headers)
     content = {
         'response': response,
+        'food':food,
         }
     return render(request, 'couponBank/coupon_bank_eats_type.html',content)
 

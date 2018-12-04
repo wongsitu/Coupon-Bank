@@ -15,6 +15,7 @@ MEDIA_DIR = os.path.join(BASE_DIR,'couponBank/media')
 SECRET_KEY = os.environ['SECRET_KEY']
 STRIPE_LIVE_SECRET_KEY = os.environ['STRIPE_LIVE_SECRET_KEY']
 GOOGLE_TRACKING_ID = os.environ['GOOGLE_TRACKING_ID']
+GOOGLE_MAPS_API = os.environ['GOOGLE_MAPS_API']
 YELP_API_KEY = os.environ['YELP_API_KEY']
 YELP_CLIENT_ID = os.environ['YELP_CLIENT_ID']
 
