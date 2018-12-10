@@ -1,12 +1,12 @@
 {% extends "couponBank/base.html" %}
-
+{% load crispy_forms_tags %}
 {% block content %}
-<h2>My profile form</h2>
-<div class="form">
+<h2 class="text-center">My profile form</h2>
+<div class="form justify-content-center">
     <form enctype="multipart/form-data" method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" name="" value="Save">
+        {{ form|crispy }}
+        <input type="submit" class="btn btn-primary" value="Save">
     </form>
 </div>
 

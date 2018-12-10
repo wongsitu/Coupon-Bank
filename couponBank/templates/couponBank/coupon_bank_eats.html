@@ -90,10 +90,10 @@
                 <img class="card-img-top" id="imgcard" src="{{restaurant.image_url}}">
                 <div class="card-body">
                     <h4 class="card-title">{{restaurant.name}}</h4>
-                    <p>Price Range: {{restaurant.price}}</p>
+                    <p>Price Range: <bold class="text-success">{{restaurant.price}}</bold></p>
                     <p class="card-text">Address: {{restaurant.location.display_address|join:" "}}</p>
                     <p class="card-text">Phone: {{restaurant.display_phone}}</p>
-                    <a class="btn btn-warning">View more</a>
+                    <a href="{{restaurant.url}}" class="btn btn-warning">View more</a>
                 </div>
             </div>
         </div>
@@ -107,10 +107,10 @@
                 <img class="card-img-top" id="imgcard" src="{{rest.image_url}}">
                 <div class="card-body">
                     <h4 class="card-title">{{rest.name}}</h4>
-                    <p>Price Range: {{rest.price}}</p>
+                    <p>Price Range: <bold class="text-success">{{rest.price}}</bold></p>
                     <p class="card-text">{{rest.location.display_address|join:" "}}</p>
                     <p class="card-text">Phone: {{rest.display_phone}}</p>
-                    <a class="btn btn-warning">View more</a>
+                    <a href="{{restaurant.url}}" class="btn btn-warning">View more</a>
                 </div>
             </div>
         </div>
@@ -124,10 +124,10 @@
                 <img class="card-img-top" id="imgcard" src="{{rest.image_url}}">
                 <div class="card-body">
                     <h4 class="card-title">{{rest.name}}</h4>
-                    <p>Price Range: {{rest.price}}</p>
+                    <p>Price Range: <bold class="text-success">{{rest.price}}</bold></p>
                     <p class="card-text">{{rest.location.display_address|join:" "}}</p>
                     <p class="card-text">Phone: {{rest.display_phone}}</p>
-                    <a class="btn btn-warning">View more</a>
+                    <a href="{{restaurant.url}}" class="btn btn-warning">View more</a>
                 </div>
             </div>
         </div>

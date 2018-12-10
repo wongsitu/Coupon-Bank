@@ -1,5 +1,6 @@
 {% extends 'couponBank/base.html' %}
 {% block content %}
+{% load crispy_forms_tags %}
 {% load ratings %}
 <div class="single-view">
     <div>
@@ -36,7 +37,7 @@
                             <form enctype="multipart/form-data" action="{% url 'review_edit' pk=product.id id=review.id %}" method="POST">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
-                                        <div class="modal-header">
+                                        <div class="modal-header bg-warning text-white">
                                             <h5 class="modal-title" id="exampleModalLongTitle">Edit review for {{product.brand}}</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -44,10 +45,7 @@
                                         </div>
                                         <div class="modal-body">
                                             {% csrf_token %}
-                                            <label>Title</label>
-                                            <p>{{ form.title }}</p>
-                                            <label>Description</label>
-                                            <p>{{ form.description }}</p>
+                                            {{ form|crispy }}
                                         </div>
                                         <div class="modal-footer">
                                             <button type="submit" class="btn btn-primary">Save</button>
@@ -77,10 +75,7 @@
             </div>
             <div class="modal-body">
                 {% csrf_token %}
-                <label>Title</label>
-                <p>{{ form.title }}</p>
-                <label>Description</label>
-                <p>{{ form.description }}</p>
+                {{ form|crispy }}
             </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Save</button>
