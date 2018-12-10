@@ -21,7 +21,7 @@
                                 <h6>{{restaurant.name}}</h6>
                                 <p>{{restaurant.location.display_address|join:" "}}</p>
                                 <p>{{restaurant.display_phone}}</p>
-                                <p><a href="{{restaurant.url}}">Visit page</a></p>
+                                <p><a href="{{restaurant.url}}">Visit page</a> || <a href="#" class="coordinates" value="{{restaurant.url}}" lat="{{restaurant.coordinates.latitude}}" lng="{{restaurant.coordinates.longitude}}">Locate</a></p>
                             </div>
                             <img src="{{restaurant.image_url}}" style="width:150px; height:120px">
                         </div>
