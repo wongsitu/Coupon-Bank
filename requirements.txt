@@ -49,7 +49,7 @@ googlemaps==3.0.2
 grpcio==1.15.0
 gunicorn==19.9.0
 html5lib==1.0.1
-httplib2==0.11.3
+httplib2==0.18.0
 hyperlink==18.0.0
 idna==2.7
 incremental==17.5.0
