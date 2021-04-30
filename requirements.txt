@@ -87,7 +87,7 @@ pytz==2018.5
 redis==2.10.6
 reportlab==3.5.9
 requests==2.20.0
-rsa==4.0
+rsa==4.7
 s3transfer==0.1.13
 simplegeneric==0.8.1
 six==1.11.0
