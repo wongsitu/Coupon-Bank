@@ -85,7 +85,7 @@ python-crontab==2.3.5
 python-dateutil==2.7.3
 pytz==2018.5
 redis==2.10.6
-reportlab==3.5.9
+reportlab==3.5.55
 requests==2.20.0
 rsa==4.0
 s3transfer==0.1.13
