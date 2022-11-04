@@ -94,7 +94,7 @@ six==1.11.0
 stripe==2.10.1
 swapper==1.1.0
 traitlets==4.3.2
-Twisted==18.9.0
+Twisted==22.10.0
 uritemplate==3.0.0
 urllib3==1.23
 vine==1.1.4
